@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import DaySelector from './components/DaySelector';
 import SchedulePage from './pages/SchedulePage';
 import RoadmapPage from './pages/RoadmapPage';
+import DashboardPage from './pages/DashboardPage';
 import { useAppStorage } from './hooks/useAppHooks';
 import './App.css';
 
@@ -20,6 +21,7 @@ export default function App() {
         <main className="view-wrapper fade-in">
           <Routes>
             <Route path="/" element={<SchedulePage currentDay={currentDay} checkedItems={checkedItems} toggleCheck={toggleCheck} />} />
+            <Route path="/dashboard" element={<DashboardPage checkedItems={checkedItems} />} />
             <Route path="/math" element={<RoadmapPage type="math" currentDay={currentDay} checkedItems={checkedItems} toggleCheck={toggleCheck} />} />
             <Route path="/data-science" element={<RoadmapPage type="ds" currentDay={currentDay} checkedItems={checkedItems} toggleCheck={toggleCheck} />} />
             <Route path="/english" element={<RoadmapPage type="english" currentDay={currentDay} checkedItems={checkedItems} toggleCheck={toggleCheck} />} />
