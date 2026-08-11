@@ -18,30 +18,37 @@ export default function Navbar() {
       </button>
 
       <div className={`nav-links-group ${isOpen ? 'mobile-show' : ''}`}>
-        <Link 
-          to="/" 
-          className={`nav-link ${loc.pathname === '/' ? 'active-link' : ''}`} 
+        <Link
+          to="/"
+          className={`nav-link ${loc.pathname === '/' ? 'active-link' : ''}`}
           onClick={() => setIsOpen(false)}
         >
           Schedule
         </Link>
-        <Link 
-          to="/math" 
-          className={`nav-link ${loc.pathname === '/math' ? 'active-link' : ''}`} 
+        <Link
+          to="/dashboard"
+          className={`nav-link ${loc.pathname === '/dashboard' ? 'active-link' : ''}`}
+          onClick={() => setIsOpen(false)}
+        >
+          Dashboard
+        </Link>
+        <Link
+          to="/math"
+          className={`nav-link ${loc.pathname === '/math' ? 'active-link' : ''}`}
           onClick={() => setIsOpen(false)}
         >
           Math
         </Link>
-        <Link 
-          to="/data-science" 
-          className={`nav-link ${loc.pathname === '/data-science' ? 'active-link' : ''}`} 
+        <Link
+          to="/data-science"
+          className={`nav-link ${loc.pathname === '/data-science' ? 'active-link' : ''}`}
           onClick={() => setIsOpen(false)}
         >
           Data Science
         </Link>
-        <Link 
-          to="/english" 
-          className={`nav-link ${loc.pathname === '/english' ? 'active-link' : ''}`} 
+        <Link
+          to="/english"
+          className={`nav-link ${loc.pathname === '/english' ? 'active-link' : ''}`}
           onClick={() => setIsOpen(false)}
         >
           English
