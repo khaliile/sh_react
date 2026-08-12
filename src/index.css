@@ -35,25 +35,22 @@ html, body {
   color: #000000;
 }
 
-/* Sleek Minimalist Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* Hide scrollbar globally across all browsers and elements */
+html, body, #root, *, *::before, *::after {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
-
-::-webkit-scrollbar-track {
-  background: #000000;
+::-webkit-scrollbar,
+*::-webkit-scrollbar,
+body::-webkit-scrollbar,
+html::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+  background: transparent !important;
 }
-
-::-webkit-scrollbar-thumb {
-  background: #1f1f1f;
-  border-radius: 10px;
-  transition: background 0.2s ease;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #333333;
-}
+::-webkit-scrollbar-track, *::-webkit-scrollbar-track { background: transparent !important; }
+::-webkit-scrollbar-thumb, *::-webkit-scrollbar-thumb { background: transparent !important; }
 
 /* Interactive Elements Reset */
 button, input, select, textarea {

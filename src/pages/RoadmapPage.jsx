@@ -25,43 +25,50 @@ export default function RoadmapPage({ type, currentDay, checkedItems, toggleChec
   if (!dayData) return <section className="focus-card"><h1>No tasks for this day</h1></section>;
 
   return (
-    <section className="focus-card">
-      <header className="card-header">
-        <span className={`category-tag text-${roadmap.theme}`}>{dayData.cat}</span>
-        <h1 className="roadmap-main-title">{roadmap.title}</h1>
+    <section className="focus-card roadmap-card">
+      <header className="card-header roadmap-header">
+        <div>
+          <span className={`category-tag tag-${roadmap.theme}`}>{dayData.cat || roadmap.title}</span>
+          <h1 className="roadmap-main-title">{roadmap.title}</h1>
+          <p className="roadmap-sub-title">Tasks for {currentDay}</p>
+        </div>
+        <div className="roadmap-progress-badge">
+          <span className="rpb-pct">{Math.round(percentage)}%</span>
+          <span className="rpb-lbl">completed</span>
+        </div>
       </header>
-      
+
       <div className="task-list-container">
         {dayData.tasks.map((task, idx) => {
           const id = `${type}-${currentDay}-${idx}`;
+          const isDone = !!checkedItems[id];
           return (
-            <div key={idx} className={`task-row ${checkedItems[id] ? 'completed' : ''}`}>
-              <label className="task-label">{task}</label>
+            <div key={idx} className={`task-row ${isDone ? 'completed' : ''}`}>
               <label className="checkbox-wrapper">
-                <input 
-                  type="checkbox" 
-                  checked={!!checkedItems[id]} 
-                  onChange={() => toggleCheck(id)} 
+                <input
+                  type="checkbox"
+                  checked={isDone}
+                  onChange={() => toggleCheck(id)}
                 />
                 <span className={`custom-checkbox border-${roadmap.theme}`}></span>
               </label>
+              <label className="task-label" onClick={() => toggleCheck(id)}>{task}</label>
             </div>
           );
         })}
       </div>
 
       <footer className="progress-footer">
-        {/* هنا دمجنا الـ Chart */}
         <ProgressChart completed={completed} total={total} />
-        
-        <div className="progress-track">
-          <div 
-            className={`progress-fill bg-${roadmap.theme}`} 
-            style={{ width: `${percentage}%` }}
-          ></div>
+        <div className="progress-info-col">
+          <div className="progress-track">
+            <div
+              className={`progress-fill bg-${roadmap.theme}`}
+              style={{ width: `${percentage}%` }}
+            ></div>
+          </div>
+          <span className="progress-stats">{completed} of {total} tasks completed today</span>
         </div>
-        
-        <span className="progress-stats">{completed} / {total} Done</span>
       </footer>
     </section>
   );
