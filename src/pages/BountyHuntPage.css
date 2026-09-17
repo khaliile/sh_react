@@ -1,0 +1,348 @@
+/* ══════════════════════════════════════════════════════
+   BOUNTY HUNT PAGE — Bad Habit Wanted Posters
+   ══════════════════════════════════════════════════════ */
+
+.bounty-hunt {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #0d0804 0%, #12100a 50%, #0a0805 100%);
+  padding: 2rem;
+  color: #e8d5a3;
+  font-family: inherit;
+  overflow-x: hidden;
+}
+
+.bounty-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.bounty-header h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ef4444, #f97316, #fbbf24);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.bounty-header p { color: #7a6030; font-size: 1rem; margin: 0; }
+
+.bounty-badge {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.25rem 0.85rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #f87171;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Wanted Posters Grid ── */
+.bounty-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto 2rem;
+}
+
+/* ── Wanted Poster Card ── */
+.bounty-poster {
+  background: linear-gradient(160deg, #2a1c05, #1f1503);
+  border: 3px solid rgba(251, 191, 36, 0.35);
+  border-radius: 8px;
+  padding: 1.25rem;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.3), 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.bounty-poster:hover {
+  border-color: rgba(251, 191, 36, 0.6);
+  transform: translateY(-3px) rotate(0.3deg);
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.3), 0 12px 40px rgba(0,0,0,0.5);
+}
+
+.bounty-poster.claimed {
+  opacity: 0.55;
+  filter: grayscale(0.5);
+}
+
+/* Poster corner pins */
+.bounty-poster::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle at 35% 35%, #dc2626, #7f1d1d);
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(220,38,38,0.5);
+}
+
+.bounty-poster-label {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #fbbf24;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-top: 2px solid rgba(251,191,36,0.3);
+  border-bottom: 2px solid rgba(251,191,36,0.3);
+  padding: 0.3rem 0;
+  margin: 1rem 0 1rem;
+}
+
+.bounty-habit-icon {
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem 0 0.75rem;
+  color: #f87171;
+}
+
+.bounty-habit-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #e8d5a3;
+  text-align: center;
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.bounty-habit-desc {
+  font-size: 0.75rem;
+  color: #7a6030;
+  text-align: center;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.bounty-amount-label {
+  text-align: center;
+  font-size: 0.65rem;
+  color: #7a6030;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.2rem;
+}
+
+.bounty-amount {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #fbbf24;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 15px rgba(251,191,36,0.4);
+}
+
+.bounty-claim-btn {
+  width: 100%;
+  padding: 0.65rem;
+  border-radius: 8px;
+  border: 2px solid;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.bounty-claim-btn.active {
+  background: transparent;
+  border-color: rgba(239,68,68,0.5);
+  color: #f87171;
+}
+
+.bounty-claim-btn.active:hover {
+  background: rgba(239,68,68,0.12);
+  border-color: #ef4444;
+}
+
+.bounty-claim-btn.claimed {
+  background: rgba(74,222,128,0.1);
+  border-color: rgba(74,222,128,0.3);
+  color: #4ade80;
+  pointer-events: none;
+}
+
+/* ── Add Habit Form ── */
+.bounty-add-section {
+  max-width: 1400px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto 2rem;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(251,191,36,0.12);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.bounty-add-section h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fbbf24;
+  margin: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bounty-add-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.bounty-add-input {
+  flex: 1;
+  min-width: 160px;
+  padding: 0.65rem 0.9rem;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(251,191,36,0.2);
+  border-radius: 8px;
+  color: #e8d5a3;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.bounty-add-input:focus { border-color: rgba(251,191,36,0.5); }
+.bounty-add-input::placeholder { color: #4a3820; }
+
+.bounty-add-btn {
+  padding: 0.65rem 1.25rem;
+  background: linear-gradient(135deg, #d97706, #fbbf24);
+  border: none;
+  border-radius: 8px;
+  color: #1a0f02;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.bounty-add-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(251,191,36,0.4); }
+
+/* ── Leaderboard ── */
+.bounty-leaderboard {
+  max-width: 1400px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(251,191,36,0.12);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.bounty-leaderboard h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fbbf24;
+  margin: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bounty-lb-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.bounty-lb-row:last-child { border-bottom: none; }
+
+.bounty-lb-rank {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #fbbf24;
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.bounty-lb-name {
+  flex: 1;
+  font-size: 0.85rem;
+  color: #e8d5a3;
+}
+
+.bounty-lb-score {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #f97316;
+}
+
+@media (max-width: 768px) {
+  .bounty-hunt { padding: 1rem; }
+  .bounty-grid { grid-template-columns: 1fr; }
+  .bounty-header h1 { font-size: 1.7rem; }
+}
+
+/* â•â• LIGHT THEME â•â• */
+[data-theme="light"] .bounty-hunt {
+  background: linear-gradient(160deg, #fff7ed 0%, #fef3c7 50%, #fff8f0 100%);
+  color: #1e293b;
+}
+[data-theme="light"] .bounty-header h1 {
+  background: linear-gradient(135deg, #dc2626, #ea580c, #b45309);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+[data-theme="light"] .bounty-header p { color: #78716c; }
+[data-theme="light"] .bounty-badge { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.3); color: #dc2626; }
+[data-theme="light"] .bounty-poster { background: linear-gradient(160deg, #fef9e7, #fdf6d3); border-color: rgba(217,119,6,0.4); }
+[data-theme="light"] .bounty-poster-label { color: #b45309; border-color: rgba(217,119,6,0.3); }
+[data-theme="light"] .bounty-habit-name { color: #1e293b; }
+[data-theme="light"] .bounty-habit-desc { color: #78716c; }
+[data-theme="light"] .bounty-amount-label { color: #78716c; }
+[data-theme="light"] .bounty-add-section {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(217, 119, 6, 0.15);
+  box-shadow: none;
+}
+[data-theme="light"] .bounty-add-section h3 { color: #b45309; }
+[data-theme="light"] .bounty-add-input {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(217, 119, 6, 0.25);
+  color: #1e293b;
+}
+[data-theme="light"] .bounty-add-input::placeholder { color: #927e68; }
+[data-theme="light"] .bounty-add-input:focus {
+  border-color: #d97706;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.12);
+}
+[data-theme="light"] .bounty-leaderboard { background: rgba(0,0,0,0.03); border-color: rgba(217,119,6,0.15); }
+[data-theme="light"] .bounty-leaderboard h3 { color: #b45309; }
+[data-theme="light"] .bounty-lb-name { color: #1e293b; }
+[data-theme="light"] .bounty-lb-row { border-color: rgba(0,0,0,0.06); }
+
+/* â”€â”€ RTL â”€â”€ */
+[dir="rtl"] .bounty-grid { direction: rtl; }
+[dir="rtl"] .bounty-add-row { flex-direction: row-reverse; }
+[dir="rtl"] .bounty-lb-row { flex-direction: row-reverse; }
+[dir="rtl"] .bounty-habit-name { text-align: right; }
+[dir="rtl"] .bounty-habit-desc { text-align: right; }

@@ -1,0 +1,526 @@
+@keyframes dna-scan { from{top:-100%} to{top:100%} }
+  @keyframes ai-pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(139,92,246,0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(139,92,246,0); }
+  }
+  @keyframes glitch-text {
+    0%,100% { clip-path: inset(0 0 100% 0); }
+    10% { clip-path: inset(20% 0 50% 0); }
+    30% { clip-path: inset(60% 0 10% 0); }
+    50% { clip-path: inset(10% 0 80% 0); }
+    70% { clip-path: inset(80% 0 5% 0); }
+    90% { clip-path: inset(40% 0 30% 0); }
+  }
+  @keyframes scan-bar {
+    0% { transform: translateY(-100%); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(600%); opacity: 0; }
+  }
+  @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .dna-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  .dna-scan-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(239,68,68,0.3), transparent);
+    animation: dna-scan 3s linear infinite;
+    pointer-events: none;
+  }
+  .dna-title {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ef4444;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+  }
+  .dna-heading {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .dna-case-id {
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    font-family: monospace;
+  }
+  .dna-risk-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    align-self: flex-start;
+  }
+  .dna-section { margin-bottom: 14px; }
+  .dna-section-label {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+  }
+  .dna-section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-color);
+  }
+  .dna-finding {
+    background: var(--bg-hover);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+  .dna-finding strong { color: var(--text-primary); }
+  .dna-highlight { color: #ef4444; font-weight: 700; }
+  .dna-positive { color: #10b981; font-weight: 700; }
+  .dna-verdict {
+    margin-top: 14px;
+    padding: 12px;
+    border-radius: 10px;
+    background: var(--bg-hover);
+    border: 1px solid var(--border-color);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .dna-verdict-label {
+    font-size: 0.62rem;
+    color: #ef4444;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    font-weight: 700;
+  }
+
+  /* AI Deep Scan button */
+  .ai-scan-btn {
+    margin-top: 16px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: 1px solid rgba(139,92,246,0.5);
+    background: linear-gradient(135deg, rgba(109,40,217,0.2), rgba(139,92,246,0.15));
+    color: #c4b5fd;
+    font-weight: 700;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+    transition: all 0.25s;
+    animation: ai-pulse 2.5s ease-in-out infinite;
+  }
+  .ai-scan-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, rgba(109,40,217,0.4), rgba(139,92,246,0.3));
+    border-color: rgba(139,92,246,0.9);
+    color: #ede9fe;
+  }
+  .ai-scan-btn:disabled { opacity: 0.5; cursor: not-allowed; animation: none; }
+
+  /* AI Report card */
+  .ai-report-card {
+    margin-top: 16px;
+    background: rgba(15,10,30,0.95);
+    border: 1px solid rgba(139,92,246,0.4);
+    border-radius: 16px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ai-scan-bar {
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #a855f7, transparent);
+    animation: scan-bar 2.5s ease-in-out infinite;
+  }
+  .ai-report-header {
+    font-size: 0.84rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #c084fc;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ai-report-section {
+    margin-bottom: 14px;
+    padding: 16px 18px;
+    background: rgba(139, 92, 246, 0.08);
+    border: 1.5px solid rgba(139, 92, 246, 0.25);
+    border-radius: 12px;
+  }
+  .ai-report-section-title {
+    font-size: 0.76rem;
+    color: #c084fc;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .ai-report-text {
+    font-size: 0.92rem;
+    color: #f1f5f9;
+    line-height: 1.7;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+    font-weight: 500;
+  }
+  .ai-report-chip {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(139, 92, 246, 0.25);
+    border: 1.5px solid rgba(168, 85, 247, 0.5);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 0.84rem;
+    color: #ede9fe;
+    font-weight: 700;
+    margin: 4px 6px 4px 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  .ai-advice-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 0.92rem;
+    color: #f1f5f9;
+    line-height: 1.65;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 500;
+  }
+  .ai-advice-num {
+    color: #c084fc;
+    font-weight: 800;
+    font-size: 0.92rem;
+    min-width: 22px;
+  }
+  .ai-verdict-box {
+    background: rgba(139, 92, 246, 0.15);
+    border: 1.5px solid rgba(168, 85, 247, 0.45);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-top: 6px;
+    position: relative;
+  }
+  .ai-verdict-label {
+    font-size: 0.72rem;
+    color: #c084fc;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 800;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .ai-verdict-box p {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.7;
+    font-weight: 500;
+    margin: 0;
+    color: #f1f5f9;
+  }
+  .ai-error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1.5px solid rgba(239, 68, 68, 0.4);
+    border-radius: 12px;
+    padding: 14px 16px;
+    color: #fca5a5;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    font-weight: 500;
+  }
+
+  /* Light mode */
+  [data-theme="light"] .dna-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+  [data-theme="light"] .dna-heading { color: #0f172a; }
+  [data-theme="light"] .dna-finding,
+  [data-theme="light"] .dna-verdict {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+    color: #475569;
+  }
+  [data-theme="light"] .dna-finding strong { color: #0f172a; }
+  [data-theme="light"] .ai-scan-btn {
+    background: linear-gradient(135deg, rgba(109,40,217,0.08), rgba(139,92,246,0.12));
+    border: 1px solid rgba(109,40,217,0.4);
+    color: #6d28d9;
+    box-shadow: 0 2px 10px rgba(109,40,217,0.08);
+  }
+  [data-theme="light"] .ai-scan-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, rgba(109,40,217,0.16), rgba(139,92,246,0.22));
+    border-color: rgba(109,40,217,0.7);
+    color: #4c1d95;
+    box-shadow: 0 4px 14px rgba(109,40,217,0.15);
+  }
+  [data-theme="light"] .ai-report-card { 
+    background: #ffffff; 
+    border-color: rgba(139,92,246,0.35); 
+    box-shadow: 0 6px 24px rgba(0,0,0,0.06); 
+  }
+  [data-theme="light"] .ai-report-header { color: #6d28d9; }
+  [data-theme="light"] .ai-report-section { 
+    background: #f8fafc; 
+    border: 1.5px solid #e2e8f0; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  }
+  [data-theme="light"] .ai-report-section-title { color: #6d28d9; }
+  [data-theme="light"] .ai-report-text { 
+    color: #0f172a !important; 
+    font-weight: 500;
+  }
+  [data-theme="light"] .ai-report-chip { 
+    background: #f3e8ff; 
+    border: 1.5px solid #d8b4fe; 
+    color: #581c87; 
+  }
+  [data-theme="light"] .ai-advice-item { 
+    color: #0f172a; 
+  }
+  [data-theme="light"] .ai-advice-num { color: #7c3aed; }
+  [data-theme="light"] .ai-verdict-box { 
+    background: #faf5ff; 
+    border: 1.5px solid #c084fc; 
+    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.08);
+  }
+  [data-theme="light"] .ai-verdict-label { color: #6d28d9; }
+  [data-theme="light"] .ai-verdict-box p { 
+    color: #0f172a !important; 
+  }
+  [data-theme="light"] .ai-error {
+    background: #fef2f2;
+    border-color: #fca5a5;
+    color: #b91c1c;
+  }
+
+  /* ── Centered Modal with Blurred Background ("bluray bg") ── */
+  /* Confined to page viewport so the sidebar remains 100% visible and unblurred */
+  .dna-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(6, 4, 18, 0.78);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    padding: 24px;
+    box-sizing: border-box;
+    animation: dna-modal-fade 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    cursor: pointer;
+  }
+
+  body > .dna-modal-backdrop {
+    position: fixed;
+  }
+
+  [data-theme="light"] .dna-modal-backdrop {
+    background: rgba(240, 244, 250, 0.82);
+  }
+
+  @keyframes dna-modal-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes dna-modal-pop {
+    from { transform: scale(0.92) translateY(12px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  .dna-modal-dialog {
+    background: #0f0a1e;
+    border: 1.5px solid rgba(139, 92, 246, 0.5);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 640px;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.85), 0 0 50px rgba(139, 92, 246, 0.3);
+    box-sizing: border-box;
+    animation: dna-modal-pop 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    cursor: default;
+  }
+
+  [data-theme="light"] .dna-modal-dialog {
+    background: #ffffff;
+    border: 1.5px solid rgba(139, 92, 246, 0.4);
+    box-shadow: 0 30px 70px rgba(15, 23, 42, 0.16), 0 0 40px rgba(139, 92, 246, 0.15);
+  }
+
+  .dna-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 22px;
+    border-bottom: 1.5px solid rgba(139, 92, 246, 0.22);
+    flex-shrink: 0;
+  }
+
+  [data-theme="light"] .dna-modal-header {
+    border-bottom-color: #e2e8f0;
+    background: #ffffff;
+  }
+
+  .dna-modal-close-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #c4b5fd;
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.16s ease;
+  }
+
+  [data-theme="light"] .dna-modal-close-btn {
+    background: #f1f5f9;
+    border: 1.5px solid #cbd5e1;
+    color: #334155;
+  }
+
+  [data-theme="light"] .dna-modal-close-btn:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+    color: #dc2626;
+    transform: scale(1.05);
+  }
+
+  .dna-modal-body {
+    padding: 22px;
+    overflow-y: auto;
+    flex: 1;
+    scrollbar-width: thin;
+  }
+
+  .dna-scanning-tag {
+    margin-inline-start: auto;
+    margin-inline-end: 12px;
+    font-size: 0.72rem;
+    color: #c084fc;
+    letter-spacing: 1.5px;
+    font-weight: 800;
+  }
+
+  [data-theme="light"] .dna-scanning-tag {
+    color: #7c3aed;
+  }
+
+  .dna-terminal-loader {
+    padding: 24px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .dna-terminal-lines {
+    color: #c4b5fd;
+    font-size: 0.88rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 600;
+    line-height: 2.2;
+    text-align: left;
+    max-width: 480px;
+  }
+
+  [data-theme="light"] .dna-terminal-lines {
+    color: #5b21b6;
+  }
+
+  .dna-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1.5px solid rgba(139, 92, 246, 0.2);
+  }
+
+  [data-theme="light"] .dna-modal-footer {
+    border-top: 1.5px solid #e2e8f0;
+  }
+
+  .dna-modal-done-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    padding: 9px 20px;
+    border-radius: 9px;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.16s;
+  }
+
+  .dna-modal-done-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+  }
+
+  [data-theme="light"] .dna-modal-done-btn {
+    background: #f1f5f9;
+    border: 1.5px solid #cbd5e1;
+    color: #0f172a;
+  }
+
+  [data-theme="light"] .dna-modal-done-btn:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+  }

@@ -1,0 +1,175 @@
+/* ══════════════════════════════════════════════════════
+   BLOOD PACT / STAKE VAULT PAGE
+   ══════════════════════════════════════════════════════ */
+
+.blood-pact {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 50% 0%, #150005 0%, #0c0008 50%, #050204 100%);
+  padding: 2rem; color: #e2e8f0; font-family: inherit; overflow-x: hidden;
+}
+
+.bp-header { text-align: center; margin-bottom: 2rem; }
+.bp-header h1 {
+  font-size: 2.4rem; font-weight: 800;
+  background: linear-gradient(135deg, #e11d48, #f43f5e, #be123c);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin: 0 0 0.5rem; letter-spacing: -0.02em;
+}
+.bp-header p { color: #64748b; font-size: 1rem; margin: 0 0 0.75rem; }
+
+.bp-header-stats { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+.bp-badge {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.25rem 0.85rem; background: rgba(244,63,94,0.08); border: 1px solid rgba(244,63,94,0.3);
+  border-radius: 20px; font-size: 0.72rem; font-weight: 600; color: #f43f5e;
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.bp-badge.pact-active { background: rgba(248,113,113,0.1); border-color: rgba(248,113,113,0.35); color: #f87171; }
+
+.bp-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+.bp-form-panel, .bp-pacts-panel {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(244,63,94,0.15);
+  border-radius: 20px; padding: 1.75rem;
+}
+
+.bp-form-title {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 1rem; font-weight: 700; color: #f43f5e; margin-bottom: 1.25rem;
+}
+
+/* Step Indicator */
+.bp-step-indicator { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; align-items: center; }
+.bp-step {
+  width: 32px; height: 32px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center; font-size: 0.8rem;
+  font-weight: 700; color: #475569; transition: all 0.3s;
+}
+.bp-step.active { border-color: #f43f5e; background: rgba(244,63,94,0.15); color: #f87171; }
+
+.bp-step-content { display: flex; flex-direction: column; gap: 1rem; }
+
+.bp-input-label { font-size: 0.8rem; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.35rem; }
+.bp-input-area, .bp-input {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px; padding: 0.75rem 1rem; color: #e2e8f0; font-size: 0.9rem;
+  font-family: inherit; resize: vertical; outline: none; width: 100%; box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+.bp-input { resize: none; }
+.bp-input-area:focus, .bp-input:focus { border-color: rgba(244,63,94,0.5); }
+.bp-input-area::placeholder, .bp-input::placeholder { color: #475569; }
+
+.bp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.bp-input-group { display: flex; flex-direction: column; }
+
+/* Stake Options */
+.bp-stake-options { display: flex; flex-direction: column; gap: 0.6rem; }
+.bp-stake-btn {
+  display: flex; align-items: center; gap: 0.75rem;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px; padding: 0.85rem 1.1rem; cursor: pointer; transition: all 0.2s;
+  font-size: 0.88rem; color: #94a3b8;
+}
+.bp-stake-btn:hover { border-color: rgba(244,63,94,0.4); color: #e2e8f0; }
+.bp-stake-btn.selected { border-color: #f43f5e; background: rgba(244,63,94,0.08); color: #e2e8f0; font-weight: 600; }
+.bp-stake-icon { color: #fbbf24; font-size: 1.1rem; }
+
+/* Buttons */
+.bp-next-btn {
+  padding: 0.8rem 1.25rem; background: linear-gradient(135deg, #be123c, #f43f5e);
+  border: none; border-radius: 10px; color: #fff; font-size: 0.9rem; font-weight: 700;
+  cursor: pointer; transition: all 0.2s;
+}
+.bp-next-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(244,63,94,0.35); }
+.bp-next-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.bp-back-btn {
+  padding: 0.8rem 1.25rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px; color: #64748b; font-size: 0.9rem; cursor: pointer; transition: all 0.2s;
+}
+.bp-btn-row { display: flex; gap: 0.75rem; }
+
+/* Preview */
+.bp-pact-preview {
+  background: rgba(244,63,94,0.04); border: 1px solid rgba(244,63,94,0.2);
+  border-radius: 14px; padding: 1.25rem; margin-bottom: 0.5rem;
+}
+.bp-preview-title { font-size: 0.75rem; font-weight: 700; color: #f43f5e; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+.bp-preview-commitment { font-size: 0.95rem; color: #e2e8f0; font-style: italic; line-height: 1.5; margin-bottom: 0.85rem; }
+.bp-preview-meta { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.85rem; }
+.bp-preview-meta span { display: flex; align-items: center; gap: 0.3rem; }
+.bp-preview-warning { font-size: 0.78rem; color: #f87171; background: rgba(248,113,113,0.06); border: 1px solid rgba(248,113,113,0.15); border-radius: 8px; padding: 0.6rem 0.85rem; line-height: 1.5; }
+.bp-sign-btn {
+  padding: 0.85rem 1.5rem; background: linear-gradient(135deg, #7f1d1d, #dc2626);
+  border: none; border-radius: 10px; color: #fff; font-size: 0.95rem; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;
+}
+.bp-sign-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 18px rgba(220,38,38,0.4); }
+
+/* Pacts Panel */
+.bp-pacts-panel { display: flex; flex-direction: column; gap: 1rem; }
+.bp-section-title { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.07em; }
+
+.bp-pact-card {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px; padding: 1rem 1.1rem; transition: border-color 0.2s;
+}
+.bp-pact-card.active { border-color: rgba(244,63,94,0.3); }
+.bp-pact-card.honored { border-color: rgba(251,191,36,0.25); }
+.bp-pact-card.breached { border-color: rgba(248,113,113,0.2); opacity: 0.7; }
+
+.bp-pact-status-icon { font-size: 1.3rem; flex-shrink: 0; }
+.bp-pact-body { flex: 1; }
+.bp-pact-commitment { font-size: 0.88rem; color: #e2e8f0; font-style: italic; margin-bottom: 0.4rem; line-height: 1.4; }
+.bp-pact-commitment.small { font-size: 0.8rem; }
+.bp-pact-details { display: flex; gap: 0.75rem; flex-wrap: wrap; font-size: 0.75rem; color: #64748b; }
+.bp-pact-resolved { font-size: 0.75rem; color: #64748b; margin-top: 0.2rem; }
+
+.bp-pact-actions { display: flex; flex-direction: column; gap: 0.4rem; flex-shrink: 0; }
+.bp-honor-btn {
+  display: flex; align-items: center; gap: 0.3rem;
+  background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3);
+  border-radius: 8px; color: #4ade80; font-size: 0.78rem; font-weight: 600; padding: 0.4rem 0.7rem; cursor: pointer; transition: all 0.2s;
+}
+.bp-honor-btn:hover { background: rgba(74,222,128,0.18); }
+.bp-breach-btn {
+  display: flex; align-items: center; gap: 0.3rem;
+  background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25);
+  border-radius: 8px; color: #f87171; font-size: 0.78rem; font-weight: 600; padding: 0.4rem 0.7rem; cursor: pointer; transition: all 0.2s;
+}
+.bp-breach-btn:hover { background: rgba(248,113,113,0.15); }
+.bp-delete-btn { background: none; border: none; color: #475569; cursor: pointer; font-size: 0.85rem; padding: 0.4rem; transition: color 0.2s; flex-shrink: 0; }
+.bp-delete-btn:hover { color: #f87171; }
+
+.bp-empty { text-align: center; padding: 3rem 1rem; color: #475569; }
+.bp-empty p { font-size: 0.88rem; }
+
+@media (max-width: 768px) {
+  .bp-grid { grid-template-columns: 1fr; }
+  .blood-pact { padding: 1rem; }
+  .bp-header h1 { font-size: 1.7rem; }
+}
+
+/* ══ LIGHT THEME ══ */
+[data-theme="light"] .blood-pact {
+  background: linear-gradient(160deg, #fff1f2 0%, #fce7f3 40%, #f8fafc 100%);
+  color: #1e293b;
+}
+[data-theme="light"] .bp-header h1 {
+  background: linear-gradient(135deg, #9f1239, #e11d48, #881337);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+[data-theme="light"] .bp-header p { color: #475569; }
+[data-theme="light"] .bp-badge { background: rgba(225,29,72,0.06); border-color: rgba(225,29,72,0.2); color: #9f1239; }
+[data-theme="light"] .bp-form-panel, [data-theme="light"] .bp-pacts-panel { background: #ffffff; border-color: rgba(225,29,72,0.15); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+[data-theme="light"] .bp-input-area, [data-theme="light"] .bp-input { background: #f8fafc; border-color: #e2e8f0; color: #1e293b; }
+[data-theme="light"] .bp-stake-btn { background: #f8fafc; border-color: #e2e8f0; color: #475569; }
+[data-theme="light"] .bp-pact-card { background: #f8fafc; border-color: #e2e8f0; }
+[data-theme="light"] .bp-pact-commitment { color: #1e293b; }
+[data-theme="light"] .bp-back-btn { background: #f1f5f9; border-color: #e2e8f0; color: #475569; }
+[data-theme="light"] .bp-step { border-color: #e2e8f0; color: #64748b; }
+[data-theme="light"] .bp-step.active { border-color: #f43f5e; background: rgba(244,63,94,0.08); color: #e11d48; }
+
+[dir="rtl"] .bp-grid { direction: rtl; }
+[dir="rtl"] .bp-step-indicator { direction: ltr; }

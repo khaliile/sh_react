@@ -1,59 +1,29 @@
 import { useMemo, useState } from 'react';
 import { useAppStorage } from '../hooks/useAppHooks';
+import { useLanguage } from '../contexts/LanguageContext';
+import {
+  FaCompass,
+  FaGlobeAmericas,
+  FaCity,
+  FaFlag,
+  FaEye,
+  FaEyeSlash,
+  FaLock,
+  FaCheckCircle,
+} from 'react-icons/fa';
+import {
+  WORLD_LAND_PATH,
+  WORLD_BORDERS_PATH,
+  MAP_OCEAN_LABELS,
+  REAL_CITIES,
+  EQUATOR_Y,
+  TROPIC_CANCER_Y,
+  TROPIC_CAPRICORN_Y,
+} from '../data/worldMapData';
+import './StudyFootprint.css';
 
-// 50 world cities with approximate percentage positions on a flat map (x=0 left→right=100, y=0 top→bottom=100)
-const CITIES = [
-  { name: 'New York',       country: 'USA',          region: 'Americas', x: 26, y: 37 },
-  { name: 'London',         country: 'UK',           region: 'Europe',   x: 48, y: 27 },
-  { name: 'Paris',          country: 'France',       region: 'Europe',   x: 49, y: 30 },
-  { name: 'Tokyo',          country: 'Japan',        region: 'Asia',     x: 83, y: 35 },
-  { name: 'Sydney',         country: 'Australia',    region: 'Oceania',  x: 84, y: 72 },
-  { name: 'Cairo',          country: 'Egypt',        region: 'Africa',   x: 56, y: 43 },
-  { name: 'Mumbai',         country: 'India',        region: 'Asia',     x: 67, y: 47 },
-  { name: 'Beijing',        country: 'China',        region: 'Asia',     x: 79, y: 33 },
-  { name: 'São Paulo',      country: 'Brazil',       region: 'Americas', x: 34, y: 65 },
-  { name: 'Moscow',         country: 'Russia',       region: 'Europe',   x: 58, y: 24 },
-  { name: 'Lagos',          country: 'Nigeria',      region: 'Africa',   x: 49, y: 53 },
-  { name: 'Mexico City',    country: 'Mexico',       region: 'Americas', x: 20, y: 46 },
-  { name: 'Seoul',          country: 'South Korea',  region: 'Asia',     x: 82, y: 34 },
-  { name: 'Istanbul',       country: 'Turkey',       region: 'Europe',   x: 57, y: 34 },
-  { name: 'Buenos Aires',   country: 'Argentina',    region: 'Americas', x: 31, y: 74 },
-  { name: 'Dubai',          country: 'UAE',          region: 'Asia',     x: 63, y: 44 },
-  { name: 'Singapore',      country: 'Singapore',    region: 'Asia',     x: 76, y: 57 },
-  { name: 'Nairobi',        country: 'Kenya',        region: 'Africa',   x: 59, y: 55 },
-  { name: 'Los Angeles',    country: 'USA',          region: 'Americas', x: 13, y: 39 },
-  { name: 'Berlin',         country: 'Germany',      region: 'Europe',   x: 52, y: 26 },
-  { name: 'Toronto',        country: 'Canada',       region: 'Americas', x: 24, y: 33 },
-  { name: 'Johannesburg',   country: 'South Africa', region: 'Africa',   x: 57, y: 68 },
-  { name: 'Bangkok',        country: 'Thailand',     region: 'Asia',     x: 75, y: 50 },
-  { name: 'Tehran',         country: 'Iran',         region: 'Asia',     x: 63, y: 37 },
-  { name: 'Dhaka',          country: 'Bangladesh',   region: 'Asia',     x: 72, y: 44 },
-  { name: 'Lima',           country: 'Peru',         region: 'Americas', x: 25, y: 62 },
-  { name: 'Bogotá',         country: 'Colombia',     region: 'Americas', x: 27, y: 57 },
-  { name: 'Madrid',         country: 'Spain',        region: 'Europe',   x: 47, y: 33 },
-  { name: 'Rome',           country: 'Italy',        region: 'Europe',   x: 52, y: 35 },
-  { name: 'Oslo',           country: 'Norway',       region: 'Europe',   x: 50, y: 20 },
-  { name: 'Cape Town',      country: 'South Africa', region: 'Africa',   x: 53, y: 73 },
-  { name: 'Casablanca',     country: 'Morocco',      region: 'Africa',   x: 46, y: 39 },
-  { name: 'Manila',         country: 'Philippines',  region: 'Asia',     x: 80, y: 49 },
-  { name: 'Jakarta',        country: 'Indonesia',    region: 'Asia',     x: 77, y: 59 },
-  { name: 'Taipei',         country: 'Taiwan',       region: 'Asia',     x: 80, y: 40 },
-  { name: 'Riyadh',         country: 'Saudi Arabia', region: 'Asia',     x: 61, y: 44 },
-  { name: 'Athens',         country: 'Greece',       region: 'Europe',   x: 54, y: 36 },
-  { name: 'Warsaw',         country: 'Poland',       region: 'Europe',   x: 54, y: 25 },
-  { name: 'Accra',          country: 'Ghana',        region: 'Africa',   x: 47, y: 53 },
-  { name: 'Vancouver',      country: 'Canada',       region: 'Americas', x: 12, y: 30 },
-  { name: 'Miami',          country: 'USA',          region: 'Americas', x: 24, y: 44 },
-  { name: 'Addis Ababa',    country: 'Ethiopia',     region: 'Africa',   x: 59, y: 53 },
-  { name: 'Santiago',       country: 'Chile',        region: 'Americas', x: 27, y: 73 },
-  { name: 'Auckland',       country: 'New Zealand',  region: 'Oceania',  x: 90, y: 77 },
-  { name: 'Colombo',        country: 'Sri Lanka',    region: 'Asia',     x: 70, y: 53 },
-  { name: 'Kyiv',           country: 'Ukraine',      region: 'Europe',   x: 56, y: 26 },
-  { name: 'Amsterdam',      country: 'Netherlands',  region: 'Europe',   x: 50, y: 26 },
-  { name: 'Karachi',        country: 'Pakistan',     region: 'Asia',     x: 65, y: 43 },
-  { name: 'Chicago',        country: 'USA',          region: 'Americas', x: 23, y: 36 },
-  { name: 'Kuala Lumpur',   country: 'Malaysia',     region: 'Asia',     x: 75, y: 55 },
-];
+// 50 real world cities with accurate cartographic projection coordinates
+const CITIES = REAL_CITIES;
 
 function seededShuffle(arr, seed) {
   const a = [...arr];
@@ -68,113 +38,448 @@ function seededShuffle(arr, seed) {
 
 const REGION_COLORS = {
   Americas: '#3b82f6',
-  Europe:   '#a78bfa',
+  Europe:   '#8b5cf6',
   Africa:   '#f59e0b',
   Asia:     '#10b981',
   Oceania:  '#ec4899',
 };
 
+const REGION_TRANSLATIONS_AR = {
+  Americas: 'الأمريكتان',
+  Europe:   'أوروبا',
+  Africa:   'إفريقيا',
+  Asia:     'آسيا',
+  Oceania:  'أوقيانوسيا',
+};
+
+const COUNTRY_TRANSLATIONS_AR = {
+  'United States': 'الولايات المتحدة',
+  'United Kingdom': 'المملكة المتحدة',
+  'Japan': 'اليابان',
+  'France': 'فرنسا',
+  'Germany': 'ألمانيا',
+  'Italy': 'إيطاليا',
+  'Spain': 'إسبانيا',
+  'Canada': 'كندا',
+  'Australia': 'أستراليا',
+  'Brazil': 'البرازيل',
+  'China': 'الصين',
+  'India': 'الهند',
+  'Egypt': 'مصر',
+  'Saudi Arabia': 'السعودية',
+  'UAE': 'الإمارات',
+  'Morocco': 'المغرب',
+  'Algeria': 'الجزائر',
+  'Tunisia': 'تونس',
+  'Turkey': 'تركيا',
+  'Russia': 'روسيا',
+  'South Africa': 'جنوب إفريقيا',
+  'South Korea': 'كوريا الجنوبية',
+  'Mexico': 'المكسيك',
+  'Argentina': 'الأرجنتين',
+  'New Zealand': 'نيوزيلندا',
+  'Singapore': 'سنغافورة',
+  'Netherlands': 'هولندا',
+  'Switzerland': 'سويسرا',
+  'Sweden': 'السويد',
+  'Norway': 'النرويج',
+  'Greece': 'اليونان',
+  'Portugal': 'البرتغال',
+  'Thailand': 'تايلاند',
+  'Indonesia': 'إندونيسيا',
+  'Malaysia': 'ماليزيا',
+  'Vietnam': 'فيتنام',
+  'Philippines': 'الفلبين',
+  'Pakistan': 'باكستان',
+  'Bangladesh': 'بنغلاديش',
+  'Nigeria': 'نيجيريا',
+  'Kenya': 'كينيا',
+  'Ghana': 'غانا',
+  'Colombia': 'كولومبيا',
+  'Chile': 'تشيلي',
+  'Peru': 'بيرو',
+  'Ukraine': 'أوكرانيا',
+  'Sri Lanka': 'سريلانكا',
+};
+
+const CITY_TRANSLATIONS_AR = {
+  'Tokyo': 'طوكيو',
+  'New York': 'نيويورك',
+  'London': 'لندن',
+  'Paris': 'باريس',
+  'Cairo': 'القاهرة',
+  'Sydney': 'سيدني',
+  'Rio de Janeiro': 'ريو دي جانيرو',
+  'Beijing': 'بكين',
+  'Mumbai': 'مومباي',
+  'Berlin': 'برلين',
+  'Rome': 'روما',
+  'Madrid': 'مدريد',
+  'Toronto': 'تورونتو',
+  'Dubai': 'دبي',
+  'Riyadh': 'الرياض',
+  'Casablanca': 'الدار البيضاء',
+  'Algiers': 'الجزائر',
+  'Tunis': 'تونس',
+  'Istanbul': 'إسطنبول',
+  'Moscow': 'موسكو',
+  'Cape Town': 'كيب تاون',
+  'Seoul': 'سيول',
+  'Mexico City': 'مكسيكو سيتي',
+  'Buenos Aires': 'بوينس آيرس',
+  'Auckland': 'أوكلاند',
+  'Singapore': 'سنغافورة',
+  'Amsterdam': 'أمستردام',
+  'Kyiv': 'كييف',
+  'Karachi': 'كراتشي',
+  'Wellington': 'ويلينغتون',
+  'Kuala Lumpur': 'كوالالمبور',
+  'Accra': 'أكرا',
+  'Nairobi': 'نيروبي',
+  'Lagos': 'لاغوس',
+  'Bangkok': 'بانكوك',
+  'Jakarta': 'جاكرتا',
+  'Manila': 'مانيلا',
+  'Hanoi': 'هانوي',
+  'Bogota': 'بوغوتا',
+  'Santiago': 'سانتياغو',
+  'Lima': 'ليما',
+  'Athens': 'أثينا',
+  'Lisbon': 'لشبونة',
+  'Stockholm': 'ستوكهولم',
+  'Oslo': 'أوسلو',
+  'Zurich': 'زيورخ',
+  'Colombo': 'كولومبو',
+  'Dhaka': 'دكا',
+  'San Francisco': 'سان فرانسيسكو',
+  'Los Angeles': 'لوس أنجلوس',
+  'Chicago': 'شيكاغو',
+};
+
+const getCityName = (name, isAr) => (isAr && CITY_TRANSLATIONS_AR[name] ? CITY_TRANSLATIONS_AR[name] : name);
+const getCountryName = (country, isAr) => (isAr && COUNTRY_TRANSLATIONS_AR[country] ? COUNTRY_TRANSLATIONS_AR[country] : country);
+const getRegionName = (region, isAr) => (isAr && REGION_TRANSLATIONS_AR[region] ? REGION_TRANSLATIONS_AR[region] : region);
+
 export default function StudyFootprint() {
+  const { lang } = useLanguage();
+  const isAr = lang === 'ar';
   const [log] = useAppStorage('app_time_log', { byDate: {} });
   const [hovered, setHovered] = useState(null);
+  const [selectedRegion, setSelectedRegion] = useState(null); // null or region string
+  const [showAllDestinations, setShowAllDestinations] = useState(true);
 
-  const { flags, totalHours, countryCount, regionCount } = useMemo(() => {
+  // Compute stats and discovered cities
+  const {
+    flags,
+    totalHours,
+    totalMins,
+    countryCount,
+    regionCount,
+    orderedCities,
+    nextCity,
+    minsToNext,
+  } = useMemo(() => {
     const byDate = log.byDate || {};
     const totalMins = Object.values(byDate).reduce((s, m) => s + m, 0);
     const totalHours = Math.floor(totalMins / 60);
 
-    const shuffled = seededShuffle(CITIES, 2026);
-    const flags = shuffled.slice(0, Math.min(totalHours, CITIES.length));
+    const orderedCities = seededShuffle(CITIES, 2026);
+    const flags = orderedCities.slice(0, Math.min(totalHours, CITIES.length));
 
     const countries = new Set(flags.map(f => f.country));
     const regions = new Set(flags.map(f => f.region));
 
-    return { flags, totalHours, countryCount: countries.size, regionCount: regions.size };
+    const nextCity = totalHours < CITIES.length ? orderedCities[totalHours] : null;
+    const minsToNext = 60 - (totalMins % 60);
+
+    return {
+      flags,
+      totalHours,
+      totalMins,
+      countryCount: countries.size,
+      regionCount: regions.size,
+      orderedCities,
+      nextCity,
+      minsToNext,
+    };
   }, [log.byDate]);
 
+  // Explorer Rank Calculation
+  const explorerRank = useMemo(() => {
+    const count = flags.length;
+    if (count === 0) return { title: 'Novice Wanderer', titleAr: 'مستكشف مبتدئ', rank: 'Rank 1', rankAr: 'المستوى 1', color: '#64748b' };
+    if (count < 6)   return { title: 'Local Adventurer', titleAr: 'مغامر محلي', rank: 'Rank 2', rankAr: 'المستوى 2', color: '#3b82f6' };
+    if (count < 16)  return { title: 'Continental Traveler', titleAr: 'رحالة قاري', rank: 'Rank 3', rankAr: 'المستوى 3', color: '#8b5cf6' };
+    if (count < 30)  return { title: 'Global Pioneer', titleAr: 'رائد عالمي', rank: 'Rank 4', rankAr: 'المستوى 4', color: '#f59e0b' };
+    if (count < 45)  return { title: 'Master Navigator', titleAr: 'قائد استكشاف', rank: 'Rank 5', rankAr: 'المستوى 5', color: '#10b981' };
+    return { title: 'Cosmic Sovereign', titleAr: 'حاكم كوني', rank: 'Max Rank', rankAr: 'المستوى الأقصى', color: '#ec4899' };
+  }, [flags.length]);
+
+  // Region total counts in dataset
+  const regionTotals = useMemo(() => {
+    const totals = {};
+    CITIES.forEach(c => {
+      totals[c.region] = (totals[c.region] || 0) + 1;
+    });
+    return totals;
+  }, []);
+
+  const totalCountriesInDataset = useMemo(() => {
+    return new Set(CITIES.map(c => c.country)).size;
+  }, []);
+
+  const progressPct = Math.min(100, Math.round((flags.length / CITIES.length) * 100));
+
+  // Determine which cities to display on map
+  const displayCities = useMemo(() => {
+    let list = showAllDestinations ? orderedCities : flags;
+    if (selectedRegion) {
+      list = list.filter(c => c.region === selectedRegion);
+    }
+    return list;
+  }, [showAllDestinations, orderedCities, flags, selectedRegion]);
+
   return (
-    <div className="arena-card footprint-card">
-      <div className="arena-card-header">
-        <div>
-          <h3 className="arena-card-title">Study Footprint</h3>
-          <p className="arena-card-sub">Every hour studied plants a flag in a new city</p>
+    <div className="arena-card footprint-card" dir={isAr ? 'rtl' : 'ltr'}>
+      {/* ── Top Header ── */}
+      <div className="footprint-header-row">
+        <div className="footprint-title-group">
+          <div className="footprint-title-line">
+            <FaCompass className="footprint-compass-icon" />
+            <h3 className="footprint-title">{isAr ? 'بصمة الدراسة' : 'Study Footprint'}</h3>
+            <span className="footprint-rank-badge">
+              <FaGlobeAmericas size={11} /> {isAr ? `${explorerRank.titleAr} (${explorerRank.rankAr})` : `${explorerRank.title} (${explorerRank.rank})`}
+            </span>
+          </div>
+          <p className="footprint-sub">
+            {isAr ? 'كل ساعة دراسة تفتح وجهة جديدة حول العالم' : 'Every hour studied unlocks a new world destination'}
+          </p>
         </div>
-        <div className="footprint-hour-badge">{totalHours}h → {flags.length} cities</div>
+
+        {/* Right Action Badges */}
+        <div className="footprint-header-badges">
+          <div className="footprint-hour-badge" title={isAr ? 'إجمالي الساعات والمدن المكتشفة' : 'Total hours studied and cities unlocked'}>
+            <FaCity size={11} /> {totalHours}{isAr ? ' س' : 'h'} → {flags.length} / {CITIES.length} {isAr ? 'مدينة' : 'cities'}
+          </div>
+
+          <button
+            className={`footprint-toggle-btn ${showAllDestinations ? 'active' : ''}`}
+            onClick={() => setShowAllDestinations(s => !s)}
+            title={isAr ? 'تبديل عرض جميع الوجهات الـ 50 أو المكتشفة فقط' : 'Toggle viewing all 50 global destinations vs unlocked only'}
+          >
+            {showAllDestinations ? <FaEye size={11} /> : <FaEyeSlash size={11} />}
+            {showAllDestinations ? (isAr ? 'جميع المواقع 50' : 'All 50 Pins') : (isAr ? 'المكتشفة فقط' : 'Unlocked Only')}
+          </button>
+        </div>
       </div>
 
-      <div className="footprint-map-outer">
+      {/* ── Progress Bar & Next Unlock Banner ── */}
+      <div className="footprint-progress-bar-wrap">
+        <div className="footprint-progress-header">
+          <span className="footprint-progress-title">
+            <FaFlag size={11} color="#3b82f6" />
+            {isAr ? 'تقدم غزو العالم:' : 'World Conquest Progress:'} <strong>{flags.length} / {CITIES.length} {isAr ? 'وجهة' : 'Destinations'} ({progressPct}%)</strong>
+          </span>
+          {nextCity && (
+            <span className="footprint-next-unlock">
+              {isAr ? 'التالي:' : 'Next:'} <strong>{getCityName(nextCity.name, isAr)}، {getCountryName(nextCity.country, isAr)}</strong> {isAr ? `(متبقي ${minsToNext} دقيقة دراسة)` : `(${minsToNext}m study remaining)`}
+            </span>
+          )}
+        </div>
+        <div className="footprint-progress-track">
+          <div className="footprint-progress-fill" style={{ width: `${Math.max(2, progressPct)}%` }} />
+        </div>
+      </div>
+
+      {/* ── World Atlas Map with Continents & Pins ── */}
+      <div className="footprint-map-outer" dir="ltr">
         <div className="footprint-map">
-          {/* Grid lines */}
-          {[20, 40, 60, 80].map(x => (
-            <div key={`v${x}`} className="fp-vline" style={{ left: `${x}%` }} />
-          ))}
-          {[33, 66].map(y => (
-            <div key={`h${y}`} className="fp-hline" style={{ top: `${y}%` }} />
-          ))}
+          {/* High-Fidelity Real World Map Canvas (Natural Earth 110m) */}
+          <svg className="fp-continents-svg" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet">
+            {/* Graticule Navigation & Tropic Reference Lines */}
+            <line x1="35" y1={EQUATOR_Y} x2="965" y2={EQUATOR_Y} className="fp-nav-line fp-equator-line" strokeDasharray="6 4" />
+            <line x1="35" y1={TROPIC_CANCER_Y} x2="965" y2={TROPIC_CANCER_Y} className="fp-nav-line fp-tropic-line" strokeDasharray="3 3" />
+            <line x1="35" y1={TROPIC_CAPRICORN_Y} x2="965" y2={TROPIC_CAPRICORN_Y} className="fp-nav-line fp-tropic-line" strokeDasharray="3 3" />
+            <line x1="500" y1="25" x2="500" y2="475" className="fp-nav-line fp-meridian-line" strokeDasharray="4 4" />
 
-          {/* Equator label */}
-          <div className="fp-equator-label">— Equator —</div>
+            {/* Ocean Typography Annotations */}
+            {MAP_OCEAN_LABELS.map((lbl, idx) => (
+              <text key={`ocean-${idx}`} x={lbl.x} y={lbl.y} className="fp-ocean-text">
+                {lbl.text}
+              </text>
+            ))}
 
-          {/* Flags */}
-          {flags.map((city, i) => (
-            <div
-              key={city.name}
-              className="fp-flag"
-              style={{
-                left: `${city.x}%`,
-                top: `${city.y}%`,
-                '--fi': i,
-                '--fc': REGION_COLORS[city.region] || '#fff',
-              }}
-              onMouseEnter={() => setHovered(city)}
-              onMouseLeave={() => setHovered(null)}
-            >
-              <div className="fp-pin" />
-              {hovered?.name === city.name && (
-                <div className="fp-tooltip">
-                  <strong>{city.name}</strong>
-                  <span>{city.country}</span>
+            {/* Latitude Coordinates Indicator */}
+            <text x="965" y={EQUATOR_Y - 4} className="fp-lat-text">0°</text>
+            <text x="965" y={TROPIC_CANCER_Y - 4} className="fp-lat-text">23.5°N</text>
+            <text x="965" y={TROPIC_CAPRICORN_Y - 4} className="fp-lat-text">23.5°S</text>
+
+            {/* Real World Landmasses & Continents (Dark Charcoal Slate #23252a) */}
+            <path
+              className="fp-continent-land"
+              d={WORLD_LAND_PATH}
+            />
+
+            {/* Real World Internal Country Borders (Red/Coral #ef4444) */}
+            <path
+              className="fp-country-border"
+              d={WORLD_BORDERS_PATH}
+            />
+
+            {/* Equator label */}
+            <text
+              x="500"
+              y={EQUATOR_Y - 3}
+              textAnchor="middle"
+              className="fp-equator-svg-label"
+            >{isAr ? '— خط الاستواء 0° —' : '— 0° EQUATORIAL AXIS —'}</text>
+          </svg>
+
+          {/* City Pins */}
+          {displayCities.map((city, i) => {
+            const isUnlocked = flags.some(f => f.name === city.name);
+            const color = REGION_COLORS[city.region] || '#3b82f6';
+
+            return (
+              <div
+                key={city.name}
+                className={`fp-flag ${isUnlocked ? 'unlocked' : 'undiscovered'}`}
+                style={{
+                  left: `${city.x}%`,
+                  top: `${city.y}%`,
+                  '--fi': i,
+                  '--fc': color,
+                }}
+                onMouseEnter={() => setHovered(city)}
+                onMouseLeave={() => setHovered(null)}
+              >
+                <div className="fp-pin">
+                  {isUnlocked && <span className="fp-pin-pulse" />}
                 </div>
-              )}
-            </div>
-          ))}
 
-          {/* Hover globe icon if no flags yet */}
-          {flags.length === 0 && (
-            <div className="fp-empty-msg">Study more to plant your first flag!</div>
+                {/* Hover Tooltip */}
+                {hovered?.name === city.name && (
+                  <div className="fp-tooltip" dir={isAr ? 'rtl' : 'ltr'}>
+                    <strong>
+                      {isUnlocked ? <FaCheckCircle size={10} color="#10b981" /> : <FaLock size={9} color="#94a3b8" />}
+                      {getCityName(city.name, isAr)}
+                    </strong>
+                    <span>{getCountryName(city.country, isAr)} • {getRegionName(city.region, isAr)}</span>
+                    <span
+                      className="fp-tooltip-status"
+                      style={{ color: isUnlocked ? '#10b981' : '#f59e0b' }}
+                    >
+                      {isUnlocked ? (isAr ? 'مدينة مكتشفة' : 'Discovered City') : (isAr ? 'وجهة مغلقة' : 'Locked Destination')}
+                    </span>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+
+          {/* Empty Prompt if 0 flags and preview is off */}
+          {flags.length === 0 && !showAllDestinations && (
+            <div className="fp-empty-msg" dir={isAr ? 'rtl' : 'ltr'}>
+              <FaCompass size={13} style={{ marginInlineEnd: 6 }} />
+              {isAr
+                ? `أكمل أول ساعة دراسة لتضع رايتك في ${getCityName(nextCity?.name, isAr) || 'العالم'}!`
+                : `Study your first hour to plant your flag in ${nextCity?.name || 'the world'}!`}
+            </div>
           )}
         </div>
       </div>
 
-      {/* Region legend */}
-      <div className="fp-legend">
-        {Object.entries(REGION_COLORS).map(([region, color]) => {
-          const count = flags.filter(f => f.region === region).length;
-          return (
-            <div key={region} className="fp-legend-item" style={{ opacity: count > 0 ? 1 : 0.3 }}>
-              <span className="fp-legend-dot" style={{ background: color }} />
-              <span>{region} ({count})</span>
-            </div>
-          );
-        })}
+      {/* ── Region Legend Pills (HIGH VISIBILITY IN LIGHT & DARK MODE) ── */}
+      <div className="fp-legend-container">
+        <div className="fp-legend-title-row">
+          <span>{isAr ? 'القارات والبصمة الإقليمية' : 'Continents & Regional Footprint'}</span>
+          {selectedRegion && (
+            <button
+              onClick={() => setSelectedRegion(null)}
+              style={{
+                border: 'none',
+                background: 'transparent',
+                color: '#3b82f6',
+                cursor: 'pointer',
+                fontWeight: 700,
+                fontSize: '0.72rem',
+              }}
+            >
+              {isAr ? 'إلغاء التصفية (عرض الكل)' : 'Reset Filter (Show All)'}
+            </button>
+          )}
+        </div>
+
+        <div className="fp-legend">
+          {Object.entries(REGION_COLORS).map(([region, color]) => {
+            const unlockedCount = flags.filter(f => f.region === region).length;
+            const totalInRegion = regionTotals[region] || 0;
+            const isSelected = selectedRegion === region;
+
+            return (
+              <div
+                key={region}
+                className={`fp-legend-item region-${region} ${isSelected ? 'active' : ''}`}
+                onClick={() => setSelectedRegion(isSelected ? null : region)}
+                title={isAr ? `انقر لتصفية الخريطة إلى ${getRegionName(region, isAr)}` : `Click to filter map to ${region}`}
+              >
+                <div className="fp-legend-left">
+                  <span className="fp-legend-dot" style={{ background: color, color }} />
+                  <span className="fp-legend-name">{getRegionName(region, isAr)}</span>
+                </div>
+                <span className="fp-legend-count">
+                  {unlockedCount} / {totalInRegion}
+                </span>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
+      {/* ── Bottom Metrics Ribbon ── */}
       <div className="footprint-stats">
-        <div className="fp-stat">
-          <span className="fp-val">{flags.length}</span>
-          <span className="fp-lbl">Cities</span>
+        {/* Metric 1: Cities */}
+        <div className="fp-stat-card">
+          <div className="fp-stat-icon-wrap" style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6' }}>
+            <FaCity />
+          </div>
+          <div className="fp-stat-info">
+            <span className="fp-val" style={{ color: '#3b82f6' }}>{flags.length} / {CITIES.length}</span>
+            <span className="fp-lbl">{isAr ? 'المدن المكتشفة' : 'Cities Unlocked'}</span>
+          </div>
         </div>
-        <div className="fp-stat">
-          <span className="fp-val">{countryCount}</span>
-          <span className="fp-lbl">Countries</span>
+
+        {/* Metric 2: Countries */}
+        <div className="fp-stat-card">
+          <div className="fp-stat-icon-wrap" style={{ background: 'rgba(139, 92, 246, 0.1)', color: '#8b5cf6' }}>
+            <FaFlag />
+          </div>
+          <div className="fp-stat-info">
+            <span className="fp-val" style={{ color: '#8b5cf6' }}>{countryCount} / {totalCountriesInDataset}</span>
+            <span className="fp-lbl">{isAr ? 'الدول التي وصلت إليها' : 'Countries Reached'}</span>
+          </div>
         </div>
-        <div className="fp-stat">
-          <span className="fp-val">{regionCount}</span>
-          <span className="fp-lbl">Continents</span>
+
+        {/* Metric 3: Continents */}
+        <div className="fp-stat-card">
+          <div className="fp-stat-icon-wrap" style={{ background: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}>
+            <FaGlobeAmericas />
+          </div>
+          <div className="fp-stat-info">
+            <span className="fp-val" style={{ color: '#10b981' }}>{regionCount} / 5</span>
+            <span className="fp-lbl">{isAr ? 'القارات المستكشفة' : 'Continents Explored'}</span>
+          </div>
         </div>
-        <div className="fp-stat">
-          <span className="fp-val">{CITIES.length - flags.length}</span>
-          <span className="fp-lbl">Undiscovered</span>
+
+        {/* Metric 4: Undiscovered */}
+        <div className="fp-stat-card">
+          <div className="fp-stat-icon-wrap" style={{ background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b' }}>
+            <FaCompass />
+          </div>
+          <div className="fp-stat-info">
+            <span className="fp-val" style={{ color: '#f59e0b' }}>{CITIES.length - flags.length}</span>
+            <span className="fp-lbl">{isAr ? 'مدن غير مكتشفة' : 'Undiscovered Cities'}</span>
+          </div>
         </div>
       </div>
     </div>

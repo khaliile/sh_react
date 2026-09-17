@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { FaHeadphones, FaPlay, FaPause } from 'react-icons/fa';
 
 function fmt(secs) {
   const s = Math.max(0, Math.floor(secs));
@@ -21,6 +22,9 @@ export default function ZenFocusOverlay({
   onPause,
   onResume,
   onAdd5Mins,
+  isAudioPlaying = false,
+  onToggleAudio,
+  soundscapeId = 'binaural',
 }) {
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -40,9 +44,23 @@ export default function ZenFocusOverlay({
     <div className="zen-overlay">
       <div className="zen-ambient-bg" />
 
-      <button className="zen-exit-btn" onClick={onClose} title="Exit Zen Mode (ESC)">
-        Exit Zen Mode &times;
-      </button>
+      <div className="zen-top-bar">
+        {onToggleAudio && (
+          <button
+            className={`zen-audio-toggle ${isAudioPlaying ? 'active' : ''}`}
+            onClick={onToggleAudio}
+            title={isAudioPlaying ? 'Pause Ambient Sound' : 'Play Ambient Sound'}
+          >
+            <FaHeadphones />
+            <span>{isAudioPlaying ? 'Audio Playing' : 'Audio Muted'}</span>
+            {isAudioPlaying ? <FaPause style={{ fontSize: '0.75rem' }} /> : <FaPlay style={{ fontSize: '0.75rem' }} />}
+          </button>
+        )}
+
+        <button className="zen-exit-btn" onClick={onClose} title="Exit Zen Mode (ESC)">
+          Exit Zen Mode &times;
+        </button>
+      </div>
 
       <div className="zen-content">
         <div className="zen-badge-tag">Zen Focus Mode</div>

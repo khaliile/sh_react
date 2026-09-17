@@ -1,0 +1,165 @@
+@keyframes abyss-skull-float {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10% { opacity: var(--skull-opacity); }
+  90% { opacity: var(--skull-opacity); }
+  100% { transform: translateY(-60px) rotate(360deg); opacity: 0; }
+}
+
+@keyframes abyss-particle-rise {
+  0% { transform: translateY(0) scale(1); opacity: 0.6; }
+  100% { transform: translateY(-200px) scale(0); opacity: 0; }
+}
+
+@keyframes abyss-flicker {
+  0%, 95%, 100% { opacity: 1; }
+  96% { opacity: 0.7; }
+  97% { opacity: 0.4; }
+  98% { opacity: 0.9; }
+}
+
+@keyframes abyss-pulse-red {
+  0%, 100% { box-shadow: 0 0 30px rgba(239, 68, 68, 0.3), inset 0 0 30px rgba(239, 68, 68, 0.05); }
+  50% { box-shadow: 0 0 60px rgba(239, 68, 68, 0.6), inset 0 0 60px rgba(239, 68, 68, 0.1); }
+}
+
+@keyframes abyss-title-flicker {
+  0%, 90%, 100% { opacity: 1; text-shadow: 0 0 20px #ef4444, 0 0 40px #ef4444; }
+  91% { opacity: 0.5; text-shadow: none; }
+  95% { opacity: 0.8; text-shadow: 0 0 10px #ef4444; }
+}
+
+@keyframes abyss-bar-fill {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.abyss-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 8000;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(127, 0, 0, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse at 50% 100%, rgba(100, 0, 0, 0.12) 0%, transparent 60%);
+}
+
+.abyss-vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 8001;
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(80, 0, 0, 0.35) 100%);
+  animation: abyss-pulse-red 3s ease-in-out infinite;
+}
+
+.abyss-skull {
+  position: fixed;
+  pointer-events: none;
+  z-index: 8002;
+  animation: abyss-skull-float var(--dur) var(--delay) ease-in-out infinite;
+  --skull-opacity: var(--op);
+}
+
+.abyss-particle {
+  position: fixed;
+  border-radius: 50%;
+  background: #ef4444;
+  pointer-events: none;
+  z-index: 8002;
+  animation: abyss-particle-rise var(--dur) var(--delay) ease-out infinite;
+}
+
+.abyss-panel {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 8010;
+  pointer-events: all;
+  background: rgba(10, 2, 2, 0.95);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 16px;
+  padding: 20px 24px;
+  width: 300px;
+  animation: abyss-pulse-red 3s ease-in-out infinite;
+  backdrop-filter: blur(12px);
+}
+
+.abyss-panel-title {
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #ef4444;
+  margin-bottom: 4px;
+  animation: abyss-flicker 4s infinite;
+}
+
+.abyss-panel-heading {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fca5a5;
+  margin-bottom: 4px;
+  animation: abyss-title-flicker 5s infinite;
+}
+
+.abyss-panel-sub {
+  font-size: 0.72rem;
+  color: #6b2121;
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
+.abyss-quest-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.abyss-quest-label {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  flex: 1;
+  white-space: nowrap;
+}
+
+.abyss-bar-track {
+  flex: 2;
+  height: 6px;
+  background: rgba(239, 68, 68, 0.15);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.abyss-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #7f1d1d, #ef4444, #f87171);
+  transition: width 0.5s ease;
+}
+
+.abyss-bar-pct {
+  font-size: 0.68rem;
+  color: #ef4444;
+  min-width: 30px;
+  text-align: right;
+  font-weight: 700;
+}
+
+.abyss-escape-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px;
+  border-radius: 8px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 600;
+}
+
+.abyss-escape-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+}

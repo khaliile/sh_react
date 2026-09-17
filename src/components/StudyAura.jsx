@@ -1,4 +1,6 @@
 import { useAppStorage, computeStreak } from '../hooks/useAppHooks';
+import { todayKey } from '../utils/dateKey';
+import { useLanguage } from '../contexts/LanguageContext';
 
 function getAuraState(streak, todayMins) {
   if (todayMins >= 120 || streak >= 7) return 'blazing';
@@ -7,19 +9,38 @@ function getAuraState(streak, todayMins) {
   return 'dormant';
 }
 
-const AURA_CONFIG = {
-  dormant:   { label: 'Dormant',   icon: '—', desc: 'No activity yet — start studying to awaken your aura' },
-  awakening: { label: 'Awakening', icon: '~', desc: 'Your aura stirs — keep the momentum going' },
-  focused:   { label: 'Focused',   icon: '>', desc: 'Deep focus activated — golden pulse mode' },
-  blazing:   { label: 'Blazing',   icon: '*', desc: 'Peak performance — your aura blazes at full power!' },
-};
+const getAuraConfig = (isAr) => ({
+  dormant:   { 
+    label: isAr ? 'خامد' : 'Dormant',
+    icon: '—',
+    desc: isAr ? 'لا يوجد نشاط بعد — ابدأ الدراسة لإيقاظ هالتك' : 'No activity yet — start studying to awaken your aura'
+  },
+  awakening: { 
+    label: isAr ? 'يستيقظ' : 'Awakening',
+    icon: '~',
+    desc: isAr ? 'هالتك تتحرك — حافظ على الزخم' : 'Your aura stirs — keep the momentum going'
+  },
+  focused:   { 
+    label: isAr ? 'مركز' : 'Focused',
+    icon: '>',
+    desc: isAr ? 'تم تفعيل التركيز العميق — وضع النبض الذهبي' : 'Deep focus activated — golden pulse mode'
+  },
+  blazing:   { 
+    label: isAr ? 'متوهج' : 'Blazing',
+    icon: '*',
+    desc: isAr ? 'أداء ذروة — هالتك تتوهج بأقصى قوة!' : 'Peak performance — your aura blazes at full power!'
+  },
+});
 
 export default function StudyAura({ mini = false }) {
   const [log] = useAppStorage('app_time_log', { byDate: {}, sessions: [] });
-  const todayKey = new Date().toISOString().slice(0, 10);
-  const todayMins = log.byDate?.[todayKey] || 0;
+  const { lang } = useLanguage();
+  const isAr = lang === 'ar';
+  const todayKey_ = todayKey();
+  const todayMins = log.byDate?.[todayKey_] || 0;
   const streak = computeStreak(log.byDate || {});
   const state = getAuraState(streak, todayMins);
+  const AURA_CONFIG = getAuraConfig(isAr);
   const cfg = AURA_CONFIG[state];
 
   if (mini) {
@@ -34,8 +55,8 @@ export default function StudyAura({ mini = false }) {
     <div className="arena-card aura-card">
       <div className="arena-card-header">
         <div>
-          <h3 className="arena-card-title">Study Aura</h3>
-          <p className="arena-card-sub">Your ambient presence — shaped by consistency</p>
+          <h3 className="arena-card-title">{isAr ? 'هالة الدراسة' : 'Study Aura'}</h3>
+          <p className="arena-card-sub">{isAr ? 'حضورك المحيط — تشكله الاتساق' : 'Your ambient presence — shaped by consistency'}</p>
         </div>
         <div className={`aura-state-badge aura-badge-${state}`}>{cfg.label}</div>
       </div>
@@ -56,15 +77,15 @@ export default function StudyAura({ mini = false }) {
       <div className="aura-stats-row">
         <div className="aura-stat">
           <span className="aura-stat-val">{streak}</span>
-          <span className="aura-stat-lbl">day streak</span>
+          <span className="aura-stat-lbl">{isAr ? 'تتابع أيام' : 'day streak'}</span>
         </div>
         <div className="aura-stat">
           <span className="aura-stat-val">{todayHrs}h</span>
-          <span className="aura-stat-lbl">today</span>
+          <span className="aura-stat-lbl">{isAr ? 'اليوم' : 'today'}</span>
         </div>
         <div className="aura-stat">
           <span className="aura-stat-val">{cfg.emoji}</span>
-          <span className="aura-stat-lbl">{state}</span>
+          <span className="aura-stat-lbl">{cfg.label}</span>
         </div>
       </div>
     </div>

@@ -1,0 +1,365 @@
+/* ══════════════════════════════════════════════════════
+   ORACLE PAGE — AI-Powered Study Q&A
+   ══════════════════════════════════════════════════════ */
+
+.oracle-page {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 50% -10%, #1a0a2e 0%, #070612 50%, #020208 100%);
+  padding: 2rem;
+  color: #e2e8f0;
+  font-family: inherit;
+  overflow-x: hidden;
+}
+
+.oracle-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.oracle-header h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #c084fc, #a855f7, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.oracle-header p { color: #64748b; font-size: 1rem; margin: 0; }
+
+.oracle-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.oracle-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.85rem;
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #c084fc;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.oracle-tester-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.9rem;
+  background: rgba(124, 58, 237, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #c084fc;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.oracle-tester-btn:hover {
+  background: rgba(124, 58, 237, 0.3);
+  color: #f3e8ff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+[data-theme="light"] .oracle-tester-btn {
+  background: rgba(124, 58, 237, 0.08);
+  border-color: rgba(124, 58, 237, 0.25);
+  color: #6d28d9;
+}
+
+/* ── Crystal Ball ── */
+.oracle-crystal-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.oracle-crystal {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(192,132,252,0.6), rgba(124,58,237,0.3) 50%, rgba(30,10,60,0.8));
+  border: 2px solid rgba(192,132,252,0.3);
+  position: relative;
+  box-shadow:
+    0 0 40px rgba(168,85,247,0.3),
+    0 0 80px rgba(168,85,247,0.1),
+    inset 0 0 30px rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  color: rgba(192,132,252,0.8);
+  animation: oracle-pulse 3s ease-in-out infinite;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.oracle-crystal:hover {
+  box-shadow: 0 0 60px rgba(168,85,247,0.5), 0 0 120px rgba(168,85,247,0.15), inset 0 0 30px rgba(0,0,0,0.5);
+  transform: scale(1.05);
+}
+
+.oracle-crystal.thinking {
+  animation: oracle-thinking 0.5s ease-in-out infinite;
+}
+
+@keyframes oracle-pulse {
+  0%, 100% { box-shadow: 0 0 40px rgba(168,85,247,0.3), 0 0 80px rgba(168,85,247,0.1), inset 0 0 30px rgba(0,0,0,0.5); }
+  50%       { box-shadow: 0 0 60px rgba(168,85,247,0.5), 0 0 100px rgba(168,85,247,0.15), inset 0 0 30px rgba(0,0,0,0.5); }
+}
+
+@keyframes oracle-thinking {
+  0%, 100% { box-shadow: 0 0 50px rgba(168,85,247,0.6); transform: scale(1); }
+  50%       { box-shadow: 0 0 80px rgba(168,85,247,0.9); transform: scale(1.03); }
+}
+
+.oracle-crystal::after {
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: 25%;
+  width: 30%;
+  height: 20%;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+/* ── Questions Panel ── */
+.oracle-questions-section {
+  max-width: 1400px;
+  margin: 0 auto 2rem;
+}
+
+.oracle-questions-section h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #94a3b8;
+  margin: 0 0 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.oracle-question-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.oracle-question-pill {
+  padding: 0.5rem 1rem;
+  background: rgba(168,85,247,0.08);
+  border: 1px solid rgba(168,85,247,0.2);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: #c084fc;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.oracle-question-pill:hover {
+  background: rgba(168,85,247,0.18);
+  border-color: rgba(168,85,247,0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(168,85,247,0.15);
+}
+
+/* ── Custom Question Input ── */
+.oracle-input-wrap {
+  max-width: 1400px;
+  margin: 0 auto 2rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.oracle-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(168,85,247,0.2);
+  border-radius: 12px;
+  color: #e2e8f0;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.oracle-input:focus { border-color: rgba(168,85,247,0.5); }
+.oracle-input::placeholder { color: #374151; }
+
+.oracle-ask-btn {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(124,58,237,0.35);
+}
+
+.oracle-ask-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(124,58,237,0.5); }
+.oracle-ask-btn:disabled { opacity: 0.5; pointer-events: none; }
+
+/* ── Answer Panel ── */
+.oracle-answer {
+  max-width: 1400px;
+  margin: 0 auto 2rem;
+  background: rgba(168,85,247,0.05);
+  border: 1px solid rgba(168,85,247,0.2);
+  border-radius: 18px;
+  padding: 1.75rem;
+  animation: oracle-answer-appear 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes oracle-answer-appear {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.oracle-answer-q {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #7c3aed;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.oracle-answer-text {
+  font-size: 1rem;
+  color: #e2e8f0;
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+
+.oracle-answer-highlight {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.oracle-answer-chip {
+  padding: 0.35rem 0.85rem;
+  background: rgba(168,85,247,0.12);
+  border: 1px solid rgba(168,85,247,0.25);
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #c084fc;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* ── History ── */
+.oracle-history {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.oracle-history h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #64748b;
+  margin: 0 0 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.oracle-history-item {
+  padding: 0.75rem 1rem;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  font-size: 0.82rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.oracle-history-item:hover {
+  background: rgba(168,85,247,0.06);
+  border-color: rgba(168,85,247,0.15);
+  color: #94a3b8;
+}
+
+@media (max-width: 768px) {
+  .oracle-page { padding: 1rem; }
+  .oracle-header h1 { font-size: 1.7rem; }
+  .oracle-input-wrap { flex-direction: column; }
+}
+
+/* â•â• LIGHT THEME â•â• */
+[data-theme="light"] .oracle-page {
+  background: radial-gradient(ellipse at 50% -10%, #faf5ff 0%, #f8fafc 50%, #f5f3ff 100%);
+  color: #0f172a;
+}
+[data-theme="light"] .oracle-header h1 {
+  background: linear-gradient(135deg, #7c3aed, #6d28d9, #5b21b6);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+[data-theme="light"] .oracle-header p { color: #475569; }
+[data-theme="light"] .oracle-badge { background: rgba(168,85,247,0.08); border-color: rgba(124,58,237,0.25); color: #7c3aed; }
+[data-theme="light"] .oracle-crystal {
+  background: radial-gradient(circle at 35% 30%, rgba(167,139,250,0.6), rgba(109,40,217,0.3) 50%, rgba(240,235,255,0.8));
+  border-color: rgba(139,92,246,0.4);
+  box-shadow: 0 0 30px rgba(124,58,237,0.2), 0 0 60px rgba(124,58,237,0.07), inset 0 0 20px rgba(255,255,255,0.3);
+}
+[data-theme="light"] .oracle-questions-section h3 { color: #475569; }
+[data-theme="light"] .oracle-question-pill { background: rgba(124,58,237,0.06); border-color: rgba(124,58,237,0.18); color: #6d28d9; }
+[data-theme="light"] .oracle-question-pill:hover { background: rgba(124,58,237,0.12); border-color: rgba(124,58,237,0.35); }
+[data-theme="light"] .oracle-input { background: #ffffff; border-color: rgba(124,58,237,0.2); color: #1e293b; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+[data-theme="light"] .oracle-input::placeholder { color: #94a3b8; }
+[data-theme="light"] .oracle-input:focus { border-color: rgba(124,58,237,0.4); }
+[data-theme="light"] .oracle-answer { background: rgba(124,58,237,0.04); border-color: rgba(124,58,237,0.18); }
+[data-theme="light"] .oracle-answer-text { color: #1e293b; }
+[data-theme="light"] .oracle-answer-chip { background: rgba(124,58,237,0.08); border-color: rgba(124,58,237,0.2); color: #6d28d9; }
+[data-theme="light"] .oracle-history h3 { color: #64748b; }
+[data-theme="light"] .oracle-history-item { background: #ffffff; border-color: #e2e8f0; color: #475569; }
+[data-theme="light"] .oracle-history-item:hover { background: rgba(124,58,237,0.04); border-color: rgba(124,58,237,0.15); }
+
+/* â”€â”€ RTL â”€â”€ */
+[dir="rtl"] .oracle-question-pills { direction: rtl; }
+[dir="rtl"] .oracle-input-wrap { flex-direction: row-reverse; }
+[dir="rtl"] .oracle-answer-q { flex-direction: row-reverse; }
+[dir="rtl"] .oracle-answer-highlight { direction: rtl; }
+[dir="rtl"] .oracle-history-item { flex-direction: row-reverse; }

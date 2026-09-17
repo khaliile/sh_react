@@ -1,0 +1,317 @@
+/* ==========================================================================
+   MISSION IMPOSSIBLE COMPONENT STYLES (Dark Default & Light Theme)
+   ========================================================================== */
+
+.mi-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-card, #111116);
+  border: 1.5px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border-radius: 18px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+}
+
+/* Header */
+.mi-compact-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.mi-compact-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary, #f8fafc);
+  letter-spacing: -0.01em;
+}
+
+.mi-compact-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 14px;
+  flex-shrink: 0;
+  box-shadow: 0 3px 10px rgba(79, 70, 229, 0.35);
+}
+
+.mi-compact-timer {
+  font-size: 0.76rem;
+  color: #a5b4fc;
+  font-weight: 800;
+  padding: 4px 10px;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+/* Rewards and Progress Overview */
+.mi-progress-overview {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.76rem;
+}
+
+.mi-completed-badge {
+  font-weight: 800;
+  color: #c7d2fe;
+  background: rgba(99, 102, 241, 0.2);
+  border: 1px solid rgba(99, 102, 241, 0.4);
+  padding: 3px 10px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.mi-rewards-chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mi-reward-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-weight: 800;
+  font-size: 0.72rem;
+}
+
+.mi-reward-chip.xp {
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+}
+
+.mi-reward-chip.coins {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #fbbf24;
+}
+
+/* Progress Bar */
+.mi-progress-track {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.mi-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4f46e5, #7c3aed);
+  border-radius: 6px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+}
+
+/* Missions List */
+.mi-missions-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mi-mission-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.2s ease;
+}
+
+.mi-mission-row:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.mi-mission-row.complete {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.mi-mission-type-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.mi-mission-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mi-mission-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.mi-mission-name {
+  font-size: 0.84rem;
+  color: var(--text-primary, #f8fafc);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mi-mission-progress-pill {
+  font-size: 0.74rem;
+  color: #e2e8f0;
+  font-weight: 800;
+  padding: 2px 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.mi-mission-row.complete .mi-mission-progress-pill {
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.2);
+}
+
+.mi-mission-subtrack {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.mi-mission-subfill {
+  height: 100%;
+  background: linear-gradient(90deg, #4f46e5, #06b6d4);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.mi-mission-row.complete .mi-mission-subfill {
+  background: #10b981;
+}
+
+/* ==========================================================================
+   LIGHT THEME OVERRIDES
+   ========================================================================== */
+[data-theme="light"] .mi-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .mi-compact-title {
+  color: #0f172a;
+}
+
+[data-theme="light"] .mi-compact-timer {
+  background: #e0e7ff;
+  border-color: #c7d2fe;
+  color: #4338ca;
+}
+
+[data-theme="light"] .mi-completed-badge {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+  color: #4f46e5;
+}
+
+[data-theme="light"] .mi-reward-chip.xp {
+  background: #f0f9ff;
+  border-color: #bae6fd;
+  color: #0284c7;
+}
+
+[data-theme="light"] .mi-reward-chip.coins {
+  background: #fffbeb;
+  border-color: #fde68a;
+  color: #d97706;
+}
+
+[data-theme="light"] .mi-progress-track {
+  background: #e2e8f0;
+}
+
+[data-theme="light"] .mi-mission-row {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .mi-mission-row:hover {
+  border-color: #cbd5e1;
+  background: #f1f5f9;
+}
+
+[data-theme="light"] .mi-mission-row.complete {
+  border-color: #10b981;
+  background: #ecfdf5;
+}
+
+[data-theme="light"] .mi-mission-type-icon {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .mi-mission-name {
+  color: #0f172a;
+}
+
+[data-theme="light"] .mi-mission-progress-pill {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+[data-theme="light"] .mi-mission-row.complete .mi-mission-progress-pill {
+  color: #047857;
+  border-color: #6ee7b7;
+  background: #d1fae5;
+}
+
+[data-theme="light"] .mi-mission-subtrack {
+  background: #e2e8f0;
+}
+
+/* RTL Support */
+[dir="rtl"] .mi-compact-header,
+[dir="rtl"] .mi-mission-top,
+[dir="rtl"] .mi-progress-overview {
+  flex-direction: row-reverse;
+}

@@ -1,0 +1,407 @@
+/* ══════════════════════════════════════════════════════
+   DNA LAB PAGE — Study DNA Helix Visualization
+   ══════════════════════════════════════════════════════ */
+
+.dna-lab {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #020b0a 0%, #020d1a 50%, #060219 100%);
+  padding: 2rem;
+  color: #e2e8f0;
+  font-family: inherit;
+  overflow-x: hidden;
+}
+
+/* ── Header ── */
+.dna-lab-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.dna-lab-header h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #00ffcc, #00c3ff, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.dna-lab-header p {
+  color: #94a3b8;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.dna-lab-badge {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.25rem 0.85rem;
+  background: rgba(0, 255, 204, 0.1);
+  border: 1px solid rgba(0, 255, 204, 0.3);
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #00ffcc;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Main Grid ── */
+.dna-lab-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ── Helix Canvas Section ── */
+.dna-helix-section {
+  grid-column: 1 / -1;
+  background: rgba(0, 255, 204, 0.03);
+  border: 1px solid rgba(0, 255, 204, 0.12);
+  border-radius: 20px;
+  padding: 2rem;
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.dna-helix-canvas-wrap {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dna-helix-svg {
+  filter: drop-shadow(0 0 20px rgba(0, 255, 204, 0.35));
+}
+
+/* ── Strand animations ── */
+@keyframes dna-strand-a {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes dna-rotate {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+
+.dna-node {
+  animation: dna-pulse 2s ease-in-out infinite;
+}
+
+@keyframes dna-pulse {
+  0%, 100% { r: 6; opacity: 1; }
+  50% { r: 8; opacity: 0.7; }
+}
+
+.dna-helix-info {
+  flex: 1;
+}
+
+.dna-helix-info h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #00ffcc;
+  margin: 0 0 0.5rem;
+}
+
+.dna-helix-info p {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+}
+
+/* ── DNA Stats Legend ── */
+.dna-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.dna-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.dna-legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.dna-legend-label {
+  color: #94a3b8;
+  flex: 1;
+}
+
+.dna-legend-val {
+  color: #e2e8f0;
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+
+/* ── Trait Cards ── */
+.dna-trait-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.dna-trait-card:hover {
+  border-color: rgba(0, 255, 204, 0.2);
+  background: rgba(0, 255, 204, 0.04);
+  transform: translateY(-2px);
+}
+
+.dna-trait-icon {
+  font-size: 1.6rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #00ffcc;
+}
+
+.dna-trait-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dna-trait-value {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0 0 0.5rem;
+  line-height: 1;
+}
+
+.dna-trait-desc {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Mutation panel ── */
+.dna-mutation-section {
+  grid-column: 1 / -1;
+  background: rgba(124, 58, 237, 0.05);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.dna-mutation-section h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #a78bfa;
+  margin: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dna-mutation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.dna-mutation-item {
+  background: rgba(124, 58, 237, 0.08);
+  border: 1px solid rgba(124, 58, 237, 0.15);
+  border-radius: 12px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: center;
+}
+
+.dna-mutation-item:hover {
+  background: rgba(124, 58, 237, 0.18);
+  border-color: rgba(124, 58, 237, 0.4);
+  transform: scale(1.03);
+}
+
+.dna-mutation-item.active {
+  background: rgba(124, 58, 237, 0.25);
+  border-color: #7c3aed;
+  box-shadow: 0 0 16px rgba(124, 58, 237, 0.3);
+}
+
+.dna-mutation-emoji {
+  font-size: 1.4rem;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.dna-mutation-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.dna-mutation-effect {
+  font-size: 0.72rem;
+  color: #a78bfa;
+}
+
+/* ── Bar chart strands ── */
+.dna-bar-section {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.dna-bar-section h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  margin: 0 0 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dna-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.dna-bar-label {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  width: 80px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.dna-bar-track {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.dna-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+}
+
+.dna-bar-fill::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: rgba(255,255,255,0.6);
+  border-radius: 2px;
+  animation: dna-bar-glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes dna-bar-glow {
+  from { opacity: 0.3; }
+  to { opacity: 1; }
+}
+
+.dna-bar-pct {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  width: 36px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .dna-lab { padding: 1rem; }
+  .dna-lab-grid { grid-template-columns: 1fr; }
+  .dna-helix-section { flex-direction: column; }
+  .dna-lab-header h1 { font-size: 1.7rem; }
+}
+/* ══════════════════════════════════════════════════════
+   LIGHT THEME OVERRIDES
+   ══════════════════════════════════════════════════════ */
+[data-theme="light"] .dna-lab {
+  background: linear-gradient(135deg, #f0fdf9 0%, #eff6ff 50%, #f5f3ff 100%);
+  color: #0f172a;
+}
+[data-theme="light"] .dna-lab-header h1 {
+  background: linear-gradient(135deg, #0891b2, #1d4ed8, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+[data-theme="light"] .dna-lab-header p { color: #475569; }
+[data-theme="light"] .dna-lab-badge {
+  background: rgba(6,182,212,0.1); border-color: rgba(6,182,212,0.3); color: #0891b2;
+}
+[data-theme="light"] .dna-helix-section {
+  background: rgba(6,182,212,0.04); border-color: rgba(6,182,212,0.2);
+}
+[data-theme="light"] .dna-helix-info h2 { color: #0891b2; }
+[data-theme="light"] .dna-helix-info p { color: #475569; }
+[data-theme="light"] .dna-legend-label { color: #475569; }
+[data-theme="light"] .dna-legend-val { color: #1e293b; }
+[data-theme="light"] .dna-trait-card {
+  background: #ffffff; border-color: #e2e8f0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+[data-theme="light"] .dna-trait-card:hover {
+  border-color: rgba(6,182,212,0.3); background: #f0fdfa;
+}
+[data-theme="light"] .dna-trait-title { color: #1e293b; }
+[data-theme="light"] .dna-trait-desc { color: #64748b; }
+[data-theme="light"] .dna-bar-section {
+  background: #ffffff; border-color: #e2e8f0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+[data-theme="light"] .dna-bar-section h3 { color: #1e293b; }
+[data-theme="light"] .dna-bar-label { color: #475569; }
+[data-theme="light"] .dna-bar-track { background: rgba(0,0,0,0.07); }
+[data-theme="light"] .dna-bar-pct { color: #1e293b; }
+[data-theme="light"] .dna-mutation-section {
+  background: rgba(124,58,237,0.04); border-color: rgba(124,58,237,0.18);
+}
+[data-theme="light"] .dna-mutation-section h3 { color: #6d28d9; }
+[data-theme="light"] .dna-mutation-item {
+  background: rgba(124,58,237,0.05); border-color: rgba(124,58,237,0.12);
+}
+[data-theme="light"] .dna-mutation-item:hover {
+  background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.3);
+}
+[data-theme="light"] .dna-mutation-name { color: #1e293b; }
+[data-theme="light"] .dna-mutation-effect { color: #6d28d9; }
+
+/* ── RTL Support ── */
+[dir="rtl"] .dna-helix-section { flex-direction: row-reverse; }
+[dir="rtl"] .dna-legend-item { flex-direction: row-reverse; }
+[dir="rtl"] .dna-bar-row { flex-direction: row-reverse; }
+[dir="rtl"] .dna-bar-label { text-align: left; }
+[dir="rtl"] .dna-bar-pct { text-align: left; }
+[dir="rtl"] .dna-mutation-grid { direction: rtl; }
+[dir="rtl"] .dna-pod-actions { flex-direction: row-reverse; }

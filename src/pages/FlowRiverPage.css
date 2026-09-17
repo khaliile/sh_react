@@ -1,0 +1,320 @@
+/* ══════════════════════════════════════════════════════
+   FLOW RIVER PAGE — Real-time Focus River
+   ══════════════════════════════════════════════════════ */
+
+.flow-river {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #020b14 0%, #03131f 50%, #010d10 100%);
+  padding: 2rem;
+  color: #e2e8f0;
+  font-family: inherit;
+  overflow-x: hidden;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.flow-river-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.flow-river-header h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #06b6d4, #0ea5e9, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.flow-river-header p { color: #94a3b8; font-size: 1rem; margin: 0; }
+
+.flow-badge {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.25rem 0.85rem;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #22d3ee;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── River SVG ── */
+.flow-river-scene {
+  background: rgba(6, 182, 212, 0.03);
+  border: 1px solid rgba(6, 182, 212, 0.15);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.flow-river-scene::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(6,182,212,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.flow-scene-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.flow-scene-header h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #22d3ee;
+  margin: 0;
+}
+
+.flow-state-badge {
+  padding: 0.3rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all 0.5s ease;
+}
+
+.flow-state-badge.deep { background: rgba(34,197,94,0.2); border: 1px solid rgba(34,197,94,0.4); color: #4ade80; }
+.flow-state-badge.focused { background: rgba(6,182,212,0.2); border: 1px solid rgba(6,182,212,0.4); color: #22d3ee; }
+.flow-state-badge.scattered { background: rgba(251,191,36,0.2); border: 1px solid rgba(251,191,36,0.4); color: #fbbf24; }
+.flow-state-badge.frozen { background: rgba(99,102,241,0.2); border: 1px solid rgba(99,102,241,0.4); color: #818cf8; }
+
+.flow-svg-container {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.flow-svg {
+  width: 100%;
+  height: 220px;
+}
+
+/* ── Animated water paths ── */
+@keyframes river-flow {
+  0% { stroke-dashoffset: 2000; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes river-wave {
+  0%, 100% { d: path("M0,80 C100,60 200,100 300,80 S500,60 600,80 S800,100 900,80"); }
+  50% { d: path("M0,80 C100,100 200,60 300,80 S500,100 600,80 S800,60 900,80"); }
+}
+
+@keyframes water-shimmer {
+  0% { opacity: 0.3; transform: translateX(-100%); }
+  100% { opacity: 0.1; transform: translateX(100%); }
+}
+
+/* ── Speed Slider ── */
+.flow-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  flex-wrap: wrap;
+}
+
+.flow-control-label {
+  font-size: 0.82rem;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.flow-speed-slider {
+  flex: 1;
+  min-width: 120px;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(to right, #0ea5e9 var(--val, 50%), rgba(255,255,255,0.1) var(--val, 50%));
+  outline: none;
+  cursor: pointer;
+}
+
+.flow-speed-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #0ea5e9;
+  box-shadow: 0 0 10px rgba(14,165,233,0.6);
+  cursor: pointer;
+}
+
+.flow-speed-value {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #22d3ee;
+  min-width: 50px;
+}
+
+/* ── Stats Row ── */
+.flow-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.flow-stat-card {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  padding: 1.25rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.flow-stat-card:hover {
+  border-color: rgba(6, 182, 212, 0.2);
+  background: rgba(6, 182, 212, 0.04);
+  transform: translateY(-2px);
+}
+
+.flow-stat-icon {
+  font-size: 1.3rem;
+  color: #22d3ee;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flow-stat-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #e2e8f0;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.flow-stat-label {
+  font-size: 0.72rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── History River Map ── */
+.flow-history-section {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.flow-history-section h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  margin: 0 0 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.flow-map-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+}
+
+.flow-map-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.flow-map-bar-wrap {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.flow-map-bar {
+  width: 70%;
+  border-radius: 4px 4px 0 0;
+  transition: height 1s cubic-bezier(0.23,1,0.32,1);
+  position: relative;
+  overflow: hidden;
+}
+
+.flow-map-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.15), transparent);
+  border-radius: inherit;
+}
+
+.flow-map-label {
+  font-size: 0.68rem;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .flow-river { padding: 1rem; }
+  .flow-stats-row { grid-template-columns: repeat(2, 1fr); }
+  .flow-river-header h1 { font-size: 1.7rem; }
+}
+
+/* â•â• LIGHT THEME â•â• */
+[data-theme="light"] .flow-river {
+  background: linear-gradient(160deg, #f0f9ff 0%, #e0f2fe 50%, #ecfeff 100%);
+  color: #0f172a;
+}
+[data-theme="light"] .flow-river-header h1 {
+  background: linear-gradient(135deg, #0369a1, #0284c7, #0891b2);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+[data-theme="light"] .flow-river-header p { color: #475569; }
+[data-theme="light"] .flow-badge { background: rgba(6,182,212,0.1); border-color: rgba(6,182,212,0.3); color: #0284c7; }
+[data-theme="light"] .flow-stat-card { background: #ffffff; border-color: #e2e8f0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+[data-theme="light"] .flow-stat-card:hover { border-color: rgba(6,182,212,0.3); background: #f0f9ff; }
+[data-theme="light"] .flow-stat-icon { color: #0284c7; }
+[data-theme="light"] .flow-stat-value { color: #0f172a; }
+[data-theme="light"] .flow-stat-label { color: #64748b; }
+[data-theme="light"] .flow-river-scene { background: #ffffff; border-color: #e2e8f0; box-shadow: 0 1px 8px rgba(0,0,0,0.05); }
+[data-theme="light"] .flow-river-scene::before { background: radial-gradient(ellipse at 50% 0%, rgba(6,182,212,0.05) 0%, transparent 70%); }
+[data-theme="light"] .flow-svg-container {
+  background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  box-shadow: inset 0 2px 10px rgba(14, 165, 233, 0.08);
+}
+[data-theme="light"] .flow-scene-header h2 { color: #0284c7; }
+[data-theme="light"] .flow-control-label { color: #475569; }
+[data-theme="light"] .flow-controls { border-top-color: #e2e8f0; }
+[data-theme="light"] .flow-speed-value { color: #0284c7; }
+[data-theme="light"] .flow-speed-slider { background: #e2e8f0; }
+[data-theme="light"] .flow-history-section { background: #ffffff; border-color: #e2e8f0; }
+[data-theme="light"] .flow-history-section h3 { color: #1e293b; }
+[data-theme="light"] .flow-map-label { color: #475569; }
+
+/* â”€â”€ RTL â”€â”€ */
+[dir="rtl"] .flow-controls { flex-direction: row-reverse; }
+[dir="rtl"] .flow-scene-header { flex-direction: row-reverse; }
+[dir="rtl"] .flow-stats-row { direction: rtl; }

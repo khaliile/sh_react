@@ -1,7 +1,10 @@
 import { useMemo } from 'react';
 import { useAppStorage } from '../hooks/useAppHooks';
+import { todayKey, todayKeyAt } from '../utils/dateKey';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const DAY_NAMES_AR = ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
 
 function fmt(m) {
   const h = Math.floor(m / 60);
@@ -13,14 +16,15 @@ function fmt(m) {
 
 export default function MirrorMode() {
   const [log] = useAppStorage('app_time_log', { byDate: {}, sessions: [] });
+  const { lang } = useLanguage();
+  const isAr = lang === 'ar';
 
-  const todayKey = new Date().toISOString().slice(0, 10);
+  const todayKey_ = todayKey();
   const todayDow = new Date().getDay();
-  const todayName = DAY_NAMES[todayDow];
+  const todayName = isAr ? DAY_NAMES_AR[todayDow] : DAY_NAMES[todayDow];
 
   const {
     todayMins,
-    pastDays,
     pastAvg,
     pastByNow,
     diff,
@@ -28,14 +32,14 @@ export default function MirrorMode() {
     weekCount,
   } = useMemo(() => {
     const byDate = log.byDate || {};
-    const todayMins = byDate[todayKey] || 0;
+    const todayMins = byDate[todayKey_] || 0;
 
     // Collect past same-weekday dates (last 4 weeks)
     const pastDays = [];
     for (let w = 1; w <= 4; w++) {
       const d = new Date();
       d.setDate(d.getDate() - w * 7);
-      const key = d.toISOString().slice(0, 10);
+      const key = todayKeyAt(d);
       if (byDate[key] !== undefined) {
         pastDays.push({ key, mins: byDate[key] });
       }
@@ -58,7 +62,7 @@ export default function MirrorMode() {
     const ahead = diff >= 0;
 
     return { todayMins, pastDays, pastAvg, pastByNow, diff, ahead, weekCount: pastDays.length };
-  }, [log, todayKey]);
+  }, [log, todayKey_]);
 
   const maxMins = Math.max(pastAvg || 0, todayMins, 1);
   const todayPct = Math.min(100, (todayMins / maxMins) * 100);
@@ -69,12 +73,14 @@ export default function MirrorMode() {
     <div className="arena-card mirror-card">
       <div className="arena-card-header">
         <div>
-          <h3 className="arena-card-title">Mirror Mode</h3>
-          <p className="arena-card-sub">You vs. past-you on {todayName}s</p>
+          <h3 className="arena-card-title">{isAr ? 'وضع المرآة' : 'Mirror Mode'}</h3>
+          <p className="arena-card-sub">
+            {isAr ? `أنت مقابل نفسك السابقة في أيام ${todayName}` : `You vs. past-you on ${todayName}s`}
+          </p>
         </div>
         {ahead !== null && (
           <div className={`mirror-badge ${ahead ? 'mirror-ahead' : 'mirror-behind'}`}>
-            {ahead ? '▲ Ahead' : '▼ Behind'}
+            {ahead ? (isAr ? '▲ متقدم' : '▲ Ahead') : (isAr ? '▼ متأخر' : '▼ Behind')}
           </div>
         )}
       </div>
@@ -82,7 +88,11 @@ export default function MirrorMode() {
       {pastAvg === null ? (
         <div className="mirror-empty">
           <div className="mirror-empty-icon">[ ]</div>
-          <p>Need at least 1 previous {todayName} logged to generate your ghost.</p>
+          <p>
+            {isAr 
+              ? `تحتاج إلى يوم ${todayName} واحد سابق مسجل لتوليد شبحك.`
+              : `Need at least 1 previous ${todayName} logged to generate your ghost.`}
+          </p>
         </div>
       ) : (
         <>
@@ -90,7 +100,7 @@ export default function MirrorMode() {
             {/* Today */}
             <div className="mirror-racer-row">
               <div className="mirror-racer-meta">
-                <span className="mirror-racer-name">You — Today</span>
+                <span className="mirror-racer-name">{isAr ? 'أنت — اليوم' : 'You — Today'}</span>
                 <span className="mirror-racer-val">{fmt(todayMins)}</span>
               </div>
               <div className="mirror-track">
@@ -103,7 +113,7 @@ export default function MirrorMode() {
             {/* Past you — by this time of day */}
             <div className="mirror-racer-row">
               <div className="mirror-racer-meta">
-                <span className="mirror-racer-name">Past You (by now)</span>
+                <span className="mirror-racer-name">{isAr ? 'أنت السابق (حتى الآن)' : 'Past You (by now)'}</span>
                 <span className="mirror-racer-val">{fmt(pastByNow || 0)}</span>
               </div>
               <div className="mirror-track">
@@ -116,7 +126,9 @@ export default function MirrorMode() {
             {/* Past full day avg */}
             <div className="mirror-racer-row mirror-racer-dim">
               <div className="mirror-racer-meta">
-                <span className="mirror-racer-name">Past {todayName} avg (full day)</span>
+                <span className="mirror-racer-name">
+                  {isAr ? `متوسط ${todayName} السابق (يوم كامل)` : `Past ${todayName} avg (full day)`}
+                </span>
                 <span className="mirror-racer-val">{fmt(pastAvg)}</span>
               </div>
               <div className="mirror-track">
@@ -128,13 +140,19 @@ export default function MirrorMode() {
           {diff !== null && (
             <div className={`mirror-verdict ${ahead ? 'verdict-ahead' : 'verdict-behind'}`}>
               {ahead
-                ? `You're beating past you by ${fmt(diff)} right now — keep it up!`
-                : `Past you had ${fmt(Math.abs(diff))} more at this time — time to catch up!`}
+                ? (isAr 
+                    ? `أنت تتفوق على نفسك السابقة بـ ${fmt(diff)} الآن — استمر!`
+                    : `You're beating past you by ${fmt(diff)} right now — keep it up!`)
+                : (isAr
+                    ? `كان لديك ${fmt(Math.abs(diff))} أكثر في هذا الوقت — حان وقت اللحاق!`
+                    : `Past you had ${fmt(Math.abs(diff))} more at this time — time to catch up!`)}
             </div>
           )}
 
           <div className="mirror-footer">
-            Based on your last {weekCount} {todayName}{weekCount !== 1 ? 's' : ''}
+            {isAr 
+              ? `بناءً على آخر ${weekCount} ${todayName}${weekCount !== 1 ? '' : ''}`
+              : `Based on your last ${weekCount} ${todayName}${weekCount !== 1 ? 's' : ''}`}
           </div>
         </>
       )}

@@ -1,0 +1,314 @@
+/* ══════════════════════════════════════════════════════
+   EGO MIRROR PAGE — Who You Think vs Who Data Says
+   ══════════════════════════════════════════════════════ */
+
+.ego-mirror {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0010 0%, #0d0120 50%, #050015 100%);
+  padding: 2rem;
+  color: #e2e8f0;
+  font-family: inherit;
+  overflow-x: hidden;
+}
+
+.ego-mirror-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.ego-mirror-header h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #a855f7, #ec4899, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.ego-mirror-header p { color: #94a3b8; font-size: 1rem; margin: 0; }
+
+.ego-badge {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.25rem 0.85rem;
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #a855f7;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Mirror Split ── */
+.ego-split {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto 2rem;
+  align-items: start;
+}
+
+.ego-divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 3rem;
+  gap: 0.5rem;
+}
+
+.ego-divider-line {
+  width: 2px;
+  flex: 1;
+  background: linear-gradient(to bottom, transparent, rgba(168,85,247,0.5), rgba(236,72,153,0.5), transparent);
+  min-height: 200px;
+}
+
+.ego-divider-icon {
+  font-size: 1.5rem;
+  color: #a855f7;
+  filter: drop-shadow(0 0 10px rgba(168,85,247,0.6));
+}
+
+/* ── Panels ── */
+.ego-panel {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 1.5rem;
+  transition: border-color 0.3s ease;
+}
+
+.ego-panel.self { border-color: rgba(99, 102, 241, 0.2); }
+.ego-panel.data { border-color: rgba(236, 72, 153, 0.2); }
+
+.ego-panel-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ego-panel.self .ego-panel-title { color: #818cf8; }
+.ego-panel.data .ego-panel-title { color: #f472b6; }
+
+.ego-panel-sub {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin: 0 0 1.5rem;
+}
+
+/* ── Trait comparison rows ── */
+.ego-trait-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.ego-trait-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.ego-trait-name {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ego-trait-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ego-trait-track {
+  flex: 1;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.ego-trait-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.ego-panel.self .ego-trait-fill {
+  background: linear-gradient(90deg, #6366f1, #818cf8);
+}
+
+.ego-panel.data .ego-trait-fill {
+  background: linear-gradient(90deg, #ec4899, #f472b6);
+}
+
+.ego-trait-pct {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  min-width: 34px;
+  text-align: right;
+}
+
+/* ── Self-Assessment Form (left panel) ── */
+.ego-self-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.ego-self-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.ego-self-label {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  flex: 1;
+}
+
+.ego-self-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.1);
+  outline: none;
+  cursor: pointer;
+}
+
+.ego-self-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #818cf8;
+  box-shadow: 0 0 8px rgba(129,140,248,0.6);
+}
+
+.ego-self-num {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #818cf8;
+  min-width: 30px;
+  text-align: right;
+}
+
+/* ── Verdict ── */
+.ego-verdict {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(236,72,153,0.08));
+  border: 1px solid rgba(168,85,247,0.2);
+  border-radius: 20px;
+  padding: 1.75rem;
+  text-align: center;
+}
+
+.ego-verdict-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #c084fc;
+  margin: 0 0 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.ego-verdict-text {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  line-height: 1.7;
+  margin: 0 0 1rem;
+}
+
+.ego-delta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.ego-delta-item {
+  background: rgba(255,255,255,0.04);
+  border-radius: 12px;
+  padding: 0.85rem;
+  text-align: center;
+}
+
+.ego-delta-label {
+  font-size: 0.72rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.3rem;
+}
+
+.ego-delta-value {
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.ego-delta-value.positive { color: #4ade80; }
+.ego-delta-value.negative { color: #f87171; }
+.ego-delta-value.neutral { color: #94a3b8; }
+
+@media (max-width: 768px) {
+  .ego-mirror { padding: 1rem; }
+  .ego-split { grid-template-columns: 1fr; }
+  .ego-divider { display: none; }
+  .ego-mirror-header h1 { font-size: 1.7rem; }
+}
+
+/* â•â• LIGHT THEME â•â• */
+[data-theme="light"] .ego-mirror {
+  background: linear-gradient(135deg, #fdf4ff 0%, #f5f3ff 50%, #faf5ff 100%);
+  color: #0f172a;
+}
+[data-theme="light"] .ego-mirror-header h1 {
+  background: linear-gradient(135deg, #7c3aed, #a21caf, #6d28d9);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+[data-theme="light"] .ego-mirror-header p { color: #475569; }
+[data-theme="light"] .ego-badge { background: rgba(168,85,247,0.08); border-color: rgba(168,85,247,0.25); color: #7c3aed; }
+[data-theme="light"] .ego-panel { background: #ffffff; border-color: #e2e8f0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+[data-theme="light"] .ego-panel.self { border-color: rgba(99,102,241,0.25); }
+[data-theme="light"] .ego-panel.data { border-color: rgba(219,39,119,0.25); }
+[data-theme="light"] .ego-panel-sub { color: #64748b; }
+[data-theme="light"] .ego-trait-name { color: #475569; }
+[data-theme="light"] .ego-trait-track { background: rgba(0,0,0,0.07); }
+[data-theme="light"] .ego-self-label { color: #475569; }
+[data-theme="light"] .ego-self-num { color: #6d28d9; }
+[data-theme="light"] .ego-divider-line { background: linear-gradient(to bottom, transparent, rgba(168,85,247,0.3), rgba(219,39,119,0.3), transparent); }
+[data-theme="light"] .ego-verdict { background: rgba(168,85,247,0.05); border-color: rgba(168,85,247,0.2); }
+[data-theme="light"] .ego-verdict-title { color: #7c3aed; }
+[data-theme="light"] .ego-verdict-text { color: #475569; }
+[data-theme="light"] .ego-delta-item { background: rgba(0,0,0,0.04); }
+[data-theme="light"] .ego-delta-label { color: #64748b; }
+
+/* â”€â”€ RTL â”€â”€ */
+[dir="rtl"] .ego-split { direction: rtl; }
+[dir="rtl"] .ego-self-item { flex-direction: row-reverse; }
+[dir="rtl"] .ego-trait-bar-wrap { flex-direction: row-reverse; }
+[dir="rtl"] .ego-verdict-title { flex-direction: row-reverse; }
+[dir="rtl"] .ego-delta-grid { direction: rtl; }

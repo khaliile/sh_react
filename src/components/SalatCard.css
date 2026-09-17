@@ -1,0 +1,401 @@
+/* ══════════════════════════════════════════════════════════════
+   SalatCard.css
+   Daily Prayer Tracker — Spacious, Theme-Aware, No Emojis
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Card Container ────────────────────────────────────────── */
+.sc-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.sc-card:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.08);
+}
+
+.sc-card-complete {
+  border-color: rgba(16, 185, 129, 0.45) !important;
+  box-shadow: 0 4px 18px rgba(16, 185, 129, 0.12) !important;
+}
+
+/* ── Header ────────────────────────────────────────────────── */
+.sc-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.sc-head-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8b5cf6;
+  flex-shrink: 0;
+}
+
+[data-theme="light"] .sc-head-icon {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.25);
+  color: #7c3aed;
+}
+
+.sc-head-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.sc-head-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.sc-head-sub {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.sc-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.sc-sp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: default;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  color: #f59e0b;
+}
+
+[data-theme="light"] .sc-sp-badge {
+  background: rgba(217, 119, 6, 0.08);
+  border-color: rgba(217, 119, 6, 0.25);
+  color: #92400e;
+}
+
+/* ── Column Headers ─────────────────────────────────────────── */
+.sc-cols-header {
+  display: grid;
+  grid-template-columns: 1fr 70px 56px 56px;
+  gap: 6px;
+  padding: 0 4px 6px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sc-col-h {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.sc-col-h-prayer {
+  text-align: left;
+}
+
+[dir="rtl"] .sc-col-h-prayer {
+  text-align: right;
+}
+
+/* ── Prayer Rows ─────────────────────────────────────────────── */
+.sc-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sc-row {
+  display: grid;
+  grid-template-columns: 1fr 70px 56px 56px;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 11px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.sc-row:hover {
+  background: var(--bg-hover);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="light"] .sc-row:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.sc-row-done {
+  border-color: rgba(16, 185, 129, 0.22);
+  background: rgba(16, 185, 129, 0.04);
+}
+
+.sc-row-mosque {
+  border-color: rgba(139, 92, 246, 0.28);
+  background: rgba(139, 92, 246, 0.06);
+}
+
+/* Prayer Info Cell */
+.sc-prayer-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.sc-prayer-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+[data-theme="light"] .sc-prayer-badge {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.sc-prayer-text-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.sc-prayer-name {
+  display: block;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.sc-prayer-time {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Points indicator */
+.sc-pts-col {
+  display: flex;
+  justify-content: center;
+}
+
+.sc-pts-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--bg-hover);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.sc-pts-tag.active {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #f59e0b;
+}
+
+[data-theme="light"] .sc-pts-tag.active {
+  background: rgba(217, 119, 6, 0.08);
+  border-color: rgba(217, 119, 6, 0.25);
+  color: #92400e;
+}
+
+/* Checkboxes */
+.sc-check-col {
+  display: flex;
+  justify-content: center;
+}
+
+.sc-custom-cb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.sc-custom-cb input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.sc-cb-box {
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  border: 1.5px solid var(--border-color);
+  background: var(--bg-hover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.sc-custom-cb:hover .sc-cb-box {
+  border-color: #3b82f6;
+  transform: scale(1.08);
+}
+
+.sc-cb-done.checked .sc-cb-box {
+  background: #10b981;
+  border-color: #10b981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.45);
+}
+
+[data-theme="light"] .sc-cb-done.checked .sc-cb-box {
+  background: #059669;
+  border-color: #059669;
+}
+
+.sc-cb-mosque.checked .sc-cb-box {
+  background: #8b5cf6;
+  border-color: #8b5cf6;
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.45);
+}
+
+[data-theme="light"] .sc-cb-mosque.checked .sc-cb-box {
+  background: #7c3aed;
+  border-color: #7c3aed;
+}
+
+.sc-cb-mosque.locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.sc-lock-icon {
+  color: var(--text-muted);
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+.sc-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.sc-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sc-progress-bar {
+  flex: 1;
+  height: 4px;
+  border-radius: 99px;
+  background: var(--border-color);
+  overflow: hidden;
+}
+
+.sc-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #10b981);
+  border-radius: 99px;
+  transition: width 0.35s ease;
+}
+
+.sc-fill-complete {
+  background: #10b981 !important;
+}
+
+.sc-progress-text {
+  font-size: 0.64rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* Legend */
+.sc-legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.64rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  padding: 4px 2px 0;
+}
+
+.sc-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sc-legend-prayer svg { color: #10b981; }
+.sc-legend-mosque svg { color: #8b5cf6; }
+.sc-legend-lock svg   { color: var(--text-muted); }
+
+/* All-done Banner */
+.sc-done-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 7px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  animation: scPop 0.3s ease-out;
+}
+
+@keyframes scPop {
+  from { transform: scale(0.95); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+[data-theme="light"] .sc-done-banner {
+  color: #059669;
+  background: rgba(5, 150, 105, 0.07);
+  border-color: rgba(5, 150, 105, 0.2);
+}

@@ -1,0 +1,130 @@
+@keyframes lf-shine {
+  from { left: -100%; }
+  to { left: 200%; }
+}
+
+.lf-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.lf-title {
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #818cf8;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+}
+
+.lf-heading {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.lf-current-level {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.lf-level-chip {
+  background: var(--bg-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 12px 16px;
+  text-align: center;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.lf-level-chip::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.15), transparent);
+  animation: lf-shine 2s infinite;
+}
+
+.lf-chip-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #818cf8;
+}
+
+.lf-chip-label {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 2px;
+  font-weight: 700;
+}
+
+.lf-forecast-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.lf-forecast-box {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid;
+  text-align: center;
+}
+
+.lf-forecast-days {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.lf-forecast-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 2px;
+  font-weight: 700;
+}
+
+.lf-avg {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* Light mode adjustments */
+[data-theme="light"] .lf-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .lf-heading {
+  color: #0f172a;
+}
+
+[data-theme="light"] .lf-level-chip {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}

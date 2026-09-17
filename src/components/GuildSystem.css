@@ -1,0 +1,168 @@
+@keyframes boss-pulse {
+  0%, 100% { filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.3)); }
+  50% { filter: drop-shadow(0 0 30px rgba(239, 68, 68, 0.6)); }
+}
+
+@keyframes mvp-shine {
+  0%, 100% { border-color: rgba(245, 158, 11, 0.4); }
+  50% { border-color: rgba(245, 158, 11, 0.9); box-shadow: 0 0 20px rgba(245, 158, 11, 0.3); }
+}
+
+.guild-system-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 22px 22px 26px 22px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.guild-boss-banner {
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.guild-leader-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--bg-hover);
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.guild-leader-row:hover {
+  transform: translateX(4px);
+  background: var(--bg-elevated);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.guild-leader-row.is-user {
+  background: rgba(245, 158, 11, 0.09);
+  border-color: rgba(245, 158, 11, 0.35);
+}
+
+.guild-leader-name {
+  color: var(--text-primary);
+}
+
+.guild-leader-damage {
+  color: var(--text-primary);
+}
+
+.guild-roster-scroll-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 280px;
+  max-height: 420px;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-inline-end: 8px;
+  padding-inline-start: 2px;
+  padding-bottom: 12px;
+  margin-bottom: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: #f59e0b rgba(245, 158, 11, 0.12);
+  scroll-behavior: smooth;
+}
+
+.guild-roster-scroll-list > *:last-child {
+  margin-bottom: 10px;
+}
+
+.guild-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  padding-top: 14px;
+  padding-bottom: 2px;
+}
+
+.guild-footer-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgba(100, 116, 139, 0.07);
+  border: 1px solid rgba(100, 116, 139, 0.13);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.01em;
+  transition: all 0.2s ease;
+}
+
+[data-theme="dark"] .guild-footer-pill {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+}
+
+.guild-roster-scroll-list::-webkit-scrollbar {
+  width: 7px;
+}
+
+.guild-roster-scroll-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+[data-theme="light"] .guild-roster-scroll-list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.guild-roster-scroll-list::-webkit-scrollbar-thumb {
+  background: #f59e0b;
+  border-radius: 8px;
+}
+
+.guild-roster-scroll-list::-webkit-scrollbar-thumb:hover {
+  background: #d97706;
+}
+
+.guild-scroll-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-hover);
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.guild-scroll-btn:hover {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  border-color: #f59e0b;
+  transform: scale(1.08);
+}
+
+[data-theme="light"] .guild-scroll-btn {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+[data-theme="light"] .guild-scroll-btn:hover {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #b45309;
+}

@@ -1,0 +1,379 @@
+/* ══════════════════════════════════════════════════════════════
+   AzkarCard.css
+   Daily Adhkar Tracker — Matches SalatCard aesthetic
+   Zero emojis — theme-aware — Arabic + English RTL/LTR
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Card ──────────────────────────────────────────────────── */
+.az-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.az-card:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.08);
+}
+
+.az-card-complete {
+  border-color: rgba(16, 185, 129, 0.45) !important;
+  box-shadow: 0 4px 18px rgba(16, 185, 129, 0.12) !important;
+}
+
+/* ── Header ────────────────────────────────────────────────── */
+.az-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.az-head-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+[data-theme="light"] .az-head-icon {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.25);
+  color: #059669;
+}
+
+.az-head-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+
+.az-head-title {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.az-head-sub {
+  font-size: 0.64rem;
+  color: var(--text-muted);
+}
+
+.az-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.az-sp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: default;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  color: #f59e0b;
+}
+
+[data-theme="light"] .az-sp-badge {
+  background: rgba(217, 119, 6, 0.08);
+  border-color: rgba(217, 119, 6, 0.25);
+  color: #92400e;
+}
+
+/* ── Column Headers ─────────────────────────────────────────── */
+.az-cols-header {
+  display: grid;
+  grid-template-columns: 1fr 74px 64px 52px;
+  gap: 6px;
+  padding: 0 4px 6px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.az-col-h {
+  font-size: 0.59rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.az-col-h-name {
+  text-align: left;
+}
+
+[dir="rtl"] .az-col-h-name {
+  text-align: right;
+}
+
+/* ── Rows ───────────────────────────────────────────────────── */
+.az-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.az-row {
+  display: grid;
+  grid-template-columns: 1fr 74px 64px 52px;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.az-row:hover {
+  background: var(--bg-hover);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="light"] .az-row:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.az-row-done {
+  border-color: rgba(16, 185, 129, 0.25);
+  background: rgba(16, 185, 129, 0.04);
+}
+
+/* Info */
+.az-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.az-type-badge {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+[data-theme="light"] .az-type-badge {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.az-name {
+  display: block;
+  font-size: 0.77rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.az-time {
+  display: block;
+  font-size: 0.61rem;
+  color: var(--text-muted);
+}
+
+/* Read Button */
+.az-read-col {
+  display: flex;
+  justify-content: center;
+}
+
+.az-read-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 7px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  color: #3b82f6;
+  font-size: 0.66rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.az-read-btn:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-1px);
+}
+
+[data-theme="light"] .az-read-btn {
+  background: rgba(37, 99, 235, 0.08);
+  border-color: rgba(37, 99, 235, 0.22);
+  color: #2563eb;
+}
+
+/* Reward Points */
+.az-pts-col {
+  display: flex;
+  justify-content: center;
+}
+
+.az-pts-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.67rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--bg-hover);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+
+.az-pts-tag.active {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #f59e0b;
+}
+
+[data-theme="light"] .az-pts-tag.active {
+  background: rgba(217, 119, 6, 0.08);
+  border-color: rgba(217, 119, 6, 0.25);
+  color: #92400e;
+}
+
+/* Checkbox */
+.az-check-col {
+  display: flex;
+  justify-content: center;
+}
+
+.az-custom-cb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.az-custom-cb input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.az-cb-box {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 1.5px solid var(--border-color);
+  background: var(--bg-hover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.az-custom-cb:hover .az-cb-box {
+  border-color: #10b981;
+  transform: scale(1.08);
+}
+
+.az-custom-cb.checked .az-cb-box {
+  background: #10b981;
+  border-color: #10b981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.45);
+}
+
+[data-theme="light"] .az-custom-cb.checked .az-cb-box {
+  background: #059669;
+  border-color: #059669;
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+.az-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding-top: 4px;
+}
+
+.az-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.az-progress-bar {
+  flex: 1;
+  height: 4px;
+  border-radius: 99px;
+  background: var(--border-color);
+  overflow: hidden;
+}
+
+.az-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #3b82f6);
+  border-radius: 99px;
+  transition: width 0.35s ease;
+}
+
+.az-fill-complete {
+  background: #10b981 !important;
+}
+
+.az-progress-text {
+  font-size: 0.63rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.az-done-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 7px;
+  font-size: 0.67rem;
+  font-weight: 600;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  animation: azPop 0.3s ease-out;
+}
+
+@keyframes azPop {
+  from { transform: scale(0.95); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+[data-theme="light"] .az-done-banner {
+  color: #059669;
+  background: rgba(5, 150, 105, 0.07);
+  border-color: rgba(5, 150, 105, 0.2);
+}

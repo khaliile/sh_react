@@ -12,6 +12,16 @@ dist
 dist-ssr
 *.local
 
+# Local Piper TTS environment + downloaded voice models
+tts-env/
+voices/
+__pycache__/
+*.pyc
+
+# Desktop build artifacts
+dist_desktop/
+StudyHub.exe
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +32,25 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Secrets — never commit real keys
+.env
+.env.local
+.env.*.local
+
+# Desktop build artifacts and packaged app
+Study Hub RPG-win32-x64/
+
+# Scratch / utility scripts that are not part of the source
+scratch/
+scripts/
+temp/
+.freebuff/
+*.webm
+*.vbs
+*.ahk
+test_*
+test-*
+update_voices.js
+all_characters.txt
+

@@ -1,0 +1,166 @@
+/* ══════════════════════════════════════════════════════
+   CHRONO-ALCHEMIST LAB PAGE
+   ══════════════════════════════════════════════════════ */
+
+.chrono-alchemist {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 30% 0%, #0c1a0a 0%, #06100a 50%, #020805 100%);
+  padding: 2rem; color: #e2e8f0; font-family: inherit; overflow-x: hidden;
+}
+
+.ca-header { text-align: center; margin-bottom: 2rem; }
+.ca-header h1 {
+  font-size: 2.4rem; font-weight: 800;
+  background: linear-gradient(135deg, #4ade80, #22c55e, #16a34a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin: 0 0 0.5rem; letter-spacing: -0.02em;
+}
+.ca-header p { color: #64748b; font-size: 1rem; margin: 0 0 0.75rem; }
+.ca-badge {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.25rem 0.85rem; background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.3);
+  border-radius: 20px; font-size: 0.72rem; font-weight: 600; color: #4ade80;
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+
+/* Brew Message */
+.ca-brew-msg {
+  max-width: 1400px; margin: 0 auto 1.5rem;
+  padding: 1rem 1.5rem; border-radius: 12px;
+  display: flex; align-items: center; gap: 0.75rem; font-size: 0.9rem;
+  animation: slide-in 0.3s ease;
+}
+@keyframes slide-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+.ca-brew-msg.success { background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.3); color: #4ade80; }
+.ca-brew-msg.fail    { background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.3); color: #f87171; }
+
+/* Main Layout */
+.ca-main-grid {
+  max-width: 1400px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 280px 1fr; gap: 1.5rem;
+}
+
+/* Panel Shared */
+.ca-panel-title {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.85rem; font-weight: 700; color: #64748b;
+  text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 1rem;
+}
+
+/* Reagents Panel */
+.ca-reagents-panel {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px; padding: 1.5rem;
+}
+.ca-study-note {
+  font-size: 0.78rem; color: #4ade80; background: rgba(74,222,128,0.06);
+  border: 1px solid rgba(74,222,128,0.15); border-radius: 8px;
+  padding: 0.5rem 0.75rem; margin-bottom: 1rem;
+}
+.ca-reagents-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.ca-reagent-card {
+  display: flex; align-items: center; gap: 0.75rem;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px; padding: 0.85rem 1rem; transition: border-color 0.2s;
+}
+.ca-reagent-card:hover { border-color: var(--r-color, #4ade80); }
+.ca-reagent-icon { font-size: 1.2rem; flex-shrink: 0; }
+.ca-reagent-info { flex: 1; }
+.ca-reagent-name { font-size: 0.85rem; font-weight: 600; color: #e2e8f0; }
+.ca-reagent-source { font-size: 0.72rem; color: #64748b; margin-top: 0.1rem; }
+.ca-reagent-qty { font-size: 1.1rem; font-weight: 800; min-width: 2rem; text-align: center; }
+.ca-add-cauldron-btn {
+  background: none; border: 1px solid; border-radius: 8px;
+  padding: 0.4rem 0.6rem; cursor: pointer; font-size: 0.8rem; transition: all 0.2s;
+}
+.ca-add-cauldron-btn:hover:not(:disabled) { opacity: 0.8; transform: scale(1.05); }
+.ca-add-cauldron-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* Cauldron */
+.ca-cauldron-panel {
+  display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(74,222,128,0.15);
+  border-radius: 20px;
+}
+.ca-cauldron-visual { display: flex; flex-direction: column; align-items: center; gap: 1rem; width: 100%; }
+.ca-cauldron-icon { font-size: 4rem; color: #22c55e; animation: cauldron-glow 3s ease-in-out infinite; }
+@keyframes cauldron-glow {
+  0%,100% { filter: drop-shadow(0 0 8px rgba(74,222,128,0.4)); }
+  50% { filter: drop-shadow(0 0 20px rgba(74,222,128,0.8)); }
+}
+.ca-cauldron-slots { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; width: 100%; }
+.ca-slot {
+  aspect-ratio: 1; border: 2px dashed; border-radius: 12px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.25rem; font-size: 1.4rem; position: relative; transition: all 0.2s;
+}
+.ca-slot.empty { border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.15); font-size: 1.2rem; font-weight: 700; }
+.ca-slot-remove {
+  position: absolute; top: 2px; right: 2px;
+  background: rgba(248,113,113,0.15); border: none; border-radius: 4px;
+  color: #f87171; cursor: pointer; padding: 0.15rem 0.25rem; font-size: 0.6rem;
+}
+.ca-brew-btn {
+  width: 100%; padding: 0.9rem 1rem; background: linear-gradient(135deg, #16a34a, #22c55e);
+  border: none; border-radius: 12px; color: #fff; font-size: 1rem; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  transition: all 0.2s; letter-spacing: 0.04em;
+}
+.ca-brew-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(74,222,128,0.3); }
+.ca-brew-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Recipes Panel */
+.ca-recipes-panel {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px; padding: 1.5rem;
+}
+.ca-recipes-list { display: flex; flex-direction: column; gap: 0.85rem; }
+.ca-recipe-card {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px; padding: 0.85rem 1rem; position: relative; transition: border-color 0.2s;
+}
+.ca-recipe-card:hover { border-color: var(--r-color, #4ade80); }
+.ca-recipe-card.brewed { border-color: var(--r-color, #4ade80); background: rgba(74,222,128,0.04); }
+.ca-recipe-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+.ca-recipe-name { font-size: 0.85rem; font-weight: 700; color: #e2e8f0; margin-bottom: 0.4rem; }
+.ca-recipe-ingredients { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.4rem; }
+.ca-ingredient-pill {
+  font-size: 0.65rem; font-weight: 600; border: 1px solid; border-radius: 8px;
+  padding: 0.1rem 0.4rem; text-transform: uppercase; letter-spacing: 0.05em;
+}
+.ca-recipe-effect { font-size: 0.75rem; color: #64748b; }
+.ca-brewed-check { position: absolute; top: 0.5rem; right: 0.5rem; }
+
+@media (max-width: 900px) {
+  .ca-main-grid { grid-template-columns: 1fr; }
+  .ca-cauldron-panel { flex-direction: row; flex-wrap: wrap; }
+}
+
+/* ══ LIGHT THEME ══ */
+[data-theme="light"] .chrono-alchemist {
+  background: linear-gradient(160deg, #f0fdf4 0%, #dcfce7 40%, #f8fafc 100%);
+  color: #1e293b;
+}
+[data-theme="light"] .ca-header h1 {
+  background: linear-gradient(135deg, #15803d, #16a34a, #166534);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+[data-theme="light"] .ca-header p { color: #475569; }
+[data-theme="light"] .ca-badge { background: rgba(22,163,74,0.08); border-color: rgba(22,163,74,0.25); color: #15803d; }
+[data-theme="light"] .ca-brew-msg.success { background: rgba(22,163,74,0.08); border-color: rgba(22,163,74,0.2); color: #15803d; }
+[data-theme="light"] .ca-study-note { background: rgba(22,163,74,0.06); border-color: rgba(22,163,74,0.15); color: #15803d; }
+[data-theme="light"] .ca-reagents-panel,
+[data-theme="light"] .ca-cauldron-panel,
+[data-theme="light"] .ca-recipes-panel { background: #ffffff; border-color: #e2e8f0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+[data-theme="light"] .ca-reagent-card,
+[data-theme="light"] .ca-recipe-card { background: #f8fafc; border-color: #e2e8f0; }
+[data-theme="light"] .ca-reagent-name,
+[data-theme="light"] .ca-recipe-name { color: #1e293b; }
+[data-theme="light"] .ca-slot.empty { border-color: #cbd5e1; color: #94a3b8; }
+[data-theme="light"] .ca-panel-title { color: #64748b; }
+
+[dir="rtl"] .ca-main-grid { direction: rtl; }
+[dir="rtl"] .ca-slot-remove { right: auto; left: 2px; }
+[dir="rtl"] .ca-brewed-check { right: auto; left: 0.5rem; }

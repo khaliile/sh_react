@@ -1,0 +1,421 @@
+/* ══════════════════════════════════════════════════════════════════════════════
+   STUDY MOMENTUM - PREMIUM SCIENTIFIC VELOCITY & STREAK ACCELERATOR
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+.momentum-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: visible;
+  position: relative;
+  min-height: 380px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* ── Status Badges ── */
+.momentum-status-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.momentum-badge-dormant {
+  background: rgba(148, 163, 184, 0.12);
+  color: #94a3b8;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.momentum-badge-accelerating {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
+}
+
+.momentum-badge-growing {
+  background: rgba(14, 165, 233, 0.15);
+  color: #0ea5e9;
+  border: 1px solid rgba(14, 165, 233, 0.35);
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.2);
+}
+
+.momentum-badge-steady {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.15);
+}
+
+.momentum-badge-cooling {
+  background: rgba(244, 63, 94, 0.15);
+  color: #f43f5e;
+  border: 1px solid rgba(244, 63, 94, 0.35);
+  box-shadow: 0 0 12px rgba(244, 63, 94, 0.15);
+}
+
+/* ── Center Gauge Area ── */
+.momentum-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 0 0.25rem;
+  position: relative;
+}
+
+.momentum-gauge-wrap {
+  position: relative;
+  width: 124px;
+  height: 124px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.momentum-svg-gauge {
+  width: 124px;
+  height: 124px;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+.momentum-gauge-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.07);
+  stroke-width: 6;
+}
+
+[data-theme="light"] .momentum-gauge-bg {
+  stroke: rgba(0, 0, 0, 0.06);
+}
+
+.momentum-gauge-bar {
+  fill: none;
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.4s ease;
+}
+
+.momentum-gauge-glow {
+  filter: blur(4px);
+  opacity: 0.5;
+}
+
+/* Center core orb */
+.momentum-core {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.momentum-core-icon {
+  font-size: 1.35rem;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.momentum-core-dormant {
+  background: radial-gradient(circle, #2d3748 0%, #1a202c 100%);
+  border: 2px solid rgba(148, 163, 184, 0.3);
+  color: #94a3b8;
+}
+
+[data-theme="light"] .momentum-core-dormant {
+  background: radial-gradient(circle, #f1f5f9 0%, #e2e8f0 100%);
+  border-color: rgba(203, 213, 225, 0.9);
+  color: #64748b;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.momentum-core-accelerating {
+  background: radial-gradient(circle, #059669 0%, #064e3b 100%);
+  border: 2px solid #10b981;
+  color: #ffffff;
+  box-shadow: 0 0 24px rgba(16, 185, 129, 0.5);
+  animation: momentum-pulse-emerald 2.2s infinite ease-in-out;
+}
+
+.momentum-core-growing {
+  background: radial-gradient(circle, #0284c7 0%, #0c4a6e 100%);
+  border: 2px solid #38bdf8;
+  color: #ffffff;
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.5);
+  animation: momentum-pulse-blue 2.4s infinite ease-in-out;
+}
+
+.momentum-core-steady {
+  background: radial-gradient(circle, #d97706 0%, #78350f 100%);
+  border: 2px solid #f59e0b;
+  color: #ffffff;
+  box-shadow: 0 0 24px rgba(245, 158, 11, 0.45);
+  animation: momentum-pulse-gold 2.6s infinite ease-in-out;
+}
+
+.momentum-core-cooling {
+  background: radial-gradient(circle, #e11d48 0%, #881337 100%);
+  border: 2px solid #f43f5e;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(244, 63, 94, 0.4);
+}
+
+@keyframes momentum-pulse-emerald {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); }
+  50% { transform: scale(1.06); box-shadow: 0 0 32px rgba(16, 185, 129, 0.7); }
+}
+
+@keyframes momentum-pulse-blue {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(56, 189, 248, 0.4); }
+  50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(56, 189, 248, 0.65); }
+}
+
+@keyframes momentum-pulse-gold {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 18px rgba(245, 158, 11, 0.35); }
+  50% { transform: scale(1.04); box-shadow: 0 0 28px rgba(245, 158, 11, 0.6); }
+}
+
+/* ── Streak Highlight Banner ── */
+.momentum-streak-banner {
+  margin-top: 8px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+}
+
+.momentum-streak-count {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+[data-theme="light"] .momentum-streak-count {
+  color: #0f172a;
+}
+
+.momentum-streak-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+[data-theme="light"] .momentum-streak-tag {
+  color: #64748b;
+}
+
+/* Description */
+.momentum-desc {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin: 6px 0 10px 0;
+  line-height: 1.35;
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+}
+
+[data-theme="light"] .momentum-desc {
+  color: #64748b;
+}
+
+/* ── 7-Day Velocity Ribbon ── */
+.momentum-ribbon-wrap {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 8px 10px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+[data-theme="light"] .momentum-ribbon-wrap {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+.momentum-week-days {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+}
+
+.momentum-day-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.momentum-day-lbl {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+[data-theme="light"] .momentum-day-lbl {
+  color: #64748b;
+}
+
+.momentum-day-pill {
+  width: 100%;
+  max-width: 26px;
+  height: 14px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+[data-theme="light"] .momentum-day-pill {
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+}
+
+.momentum-day-pill.active {
+  background: #10b981;
+  border-color: #059669;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+.momentum-day-pill.today {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 1.5px rgba(56, 189, 248, 0.7);
+}
+
+.momentum-day-pill.today.active {
+  background: #10b981;
+  border-color: #38bdf8;
+}
+
+/* Dual Direction Meter */
+.momentum-meter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.momentum-meter-track {
+  height: 5px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="light"] .momentum-meter-track {
+  background: #e2e8f0;
+}
+
+.momentum-meter-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.35);
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+[data-theme="light"] .momentum-meter-divider {
+  background: #94a3b8;
+}
+
+.momentum-meter-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 9999px;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+}
+
+.momentum-meter-legend {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+[data-theme="light"] .momentum-meter-legend {
+  color: #64748b;
+}
+
+.momentum-meter-legend-val {
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+/* ── Footer 3-Column Stats Row ── */
+.momentum-stats-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="light"] .momentum-stats-row {
+  border-top-color: #e2e8f0;
+}
+
+.momentum-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.momentum-stat-val {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  letter-spacing: -0.01em;
+}
+
+[data-theme="light"] .momentum-stat-val {
+  color: #0f172a;
+}
+
+.momentum-stat-lbl {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+[data-theme="light"] .momentum-stat-lbl {
+  color: #64748b;
+}

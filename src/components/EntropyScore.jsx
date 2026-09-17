@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useAppStorage } from '../hooks/useAppHooks';
+import { useLanguage } from '../contexts/LanguageContext';
 
 function variance(arr) {
   if (arr.length < 2) return 0;
@@ -38,6 +39,8 @@ function computeEntropy(sessions) {
 
 export default function EntropyScore() {
   const [log] = useAppStorage('app_time_log', { byDate: {}, sessions: [] });
+  const { lang } = useLanguage();
+  const isAr = lang === 'ar';
   const result = useMemo(() => computeEntropy(log.sessions), [log.sessions]);
 
   if (result.score === null) {
@@ -45,13 +48,13 @@ export default function EntropyScore() {
       <div className="arena-card entropy-card">
         <div className="arena-card-header">
           <div>
-            <h3 className="arena-card-title">Entropy Score</h3>
-            <p className="arena-card-sub">Chaotic vs. rigid study pattern analysis</p>
+            <h3 className="arena-card-title">{isAr ? 'درجة العشوائية' : 'Entropy Score'}</h3>
+            <p className="arena-card-sub">{isAr ? 'تحليل الأنماط الدراسية: فوضوية مقابل صارمة' : 'Chaotic vs. rigid study pattern analysis'}</p>
           </div>
         </div>
         <div className="entropy-empty">
           <div className="entropy-empty-icon">~</div>
-          <p>Log at least 2 sessions to calculate your entropy.</p>
+          <p>{isAr ? 'سجل جلستين على الأقل لحساب درجة العشوائية.' : 'Log at least 2 sessions to calculate your entropy.'}</p>
         </div>
       </div>
     );
@@ -60,9 +63,21 @@ export default function EntropyScore() {
   const { score, timeVar, lengthVar, variety, categories } = result;
   const zone = score < 25 ? 'robot' : score > 65 ? 'chaos' : 'green';
   const ZONES = {
-    robot: { label: 'Robot Mode', color: '#ef4444', desc: 'Too rigid — your schedule has zero variety. Mix up session times and lengths to avoid burnout.' },
-    green: { label: 'Green Zone', color: '#10b981', desc: 'Perfect balance of consistency and variety. This is where peak performers operate.' },
-    chaos: { label: 'Chaos Mode', color: '#f59e0b', desc: 'Too scattered — build more predictable blocks. Consistency builds momentum.' },
+    robot: { 
+      label: isAr ? 'وضع الروبوت' : 'Robot Mode',
+      color: '#ef4444',
+      desc: isAr ? 'صارم جداً — جدولك بلا تنوع. غيّر أوقات وطول الجلسات لتجنب الإرهاق.' : 'Too rigid — your schedule has zero variety. Mix up session times and lengths to avoid burnout.'
+    },
+    green: { 
+      label: isAr ? 'المنطقة الخضراء' : 'Green Zone',
+      color: '#10b981',
+      desc: isAr ? 'توازن مثالي بين الاتساق والتنوع. هنا يعمل ذوو الأداء الأفضل.' : 'Perfect balance of consistency and variety. This is where peak performers operate.'
+    },
+    chaos: { 
+      label: isAr ? 'وضع الفوضى' : 'Chaos Mode',
+      color: '#f59e0b',
+      desc: isAr ? 'مشتت جداً — اصنع كتل أكثر قابلية للتنبؤ. الاتساق يبني الزخم.' : 'Too scattered — build more predictable blocks. Consistency builds momentum.'
+    },
   };
   const cfg = ZONES[zone];
 
@@ -76,8 +91,8 @@ export default function EntropyScore() {
     <div className="arena-card entropy-card">
       <div className="arena-card-header">
         <div>
-          <h3 className="arena-card-title">Entropy Score</h3>
-          <p className="arena-card-sub">How chaotic vs. rigid are your study patterns?</p>
+          <h3 className="arena-card-title">{isAr ? 'درجة العشوائية' : 'Entropy Score'}</h3>
+          <p className="arena-card-sub">{isAr ? 'ما مدى فوضوية أو صرامة أنماط دراستك؟' : 'How chaotic vs. rigid are your study patterns?'}</p>
         </div>
         <div className="entropy-badge" style={{ color: cfg.color, background: cfg.color + '22' }}>
           {cfg.label}
@@ -109,9 +124,9 @@ export default function EntropyScore() {
 
       <div className="entropy-factors">
         {[
-          { label: 'Time Variety', val: timeVar, color: '#3b82f6' },
-          { label: 'Length Variety', val: lengthVar, color: '#8b5cf6' },
-          { label: 'Subject Mix', val: variety, color: '#10b981' },
+          { label: isAr ? 'تنوع الوقت' : 'Time Variety', val: timeVar, color: '#3b82f6' },
+          { label: isAr ? 'تنوع المدة' : 'Length Variety', val: lengthVar, color: '#8b5cf6' },
+          { label: isAr ? 'مزيج المواد' : 'Subject Mix', val: variety, color: '#10b981' },
         ].map(f => (
           <div key={f.label} className="entropy-factor">
             <span className="ef-label">{f.label}</span>

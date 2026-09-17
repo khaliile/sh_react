@@ -1,0 +1,136 @@
+@keyframes lb-shake {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  20% { transform: translateX(-8px) rotate(-4deg); }
+  40% { transform: translateX(8px) rotate(4deg); }
+  60% { transform: translateX(-6px) rotate(-3deg); }
+  80% { transform: translateX(6px) rotate(3deg); }
+}
+
+@keyframes lb-lid-open {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(-150deg); }
+}
+
+@keyframes lb-particles {
+  0% { opacity: 1; transform: translate(0, 0) scale(1); }
+  100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0); }
+}
+
+@keyframes lb-reveal-pop {
+  0% { opacity: 0; transform: scale(0.3) translateY(20px); }
+  60% { transform: scale(1.1) translateY(-4px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes lb-glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px var(--glow), 0 0 40px var(--glow); }
+  50% { box-shadow: 0 0 40px var(--glow), 0 0 80px var(--glow), 0 0 120px var(--glow); }
+}
+
+.lb-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.lb-panel {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 20px;
+  padding: 40px 48px;
+  text-align: center;
+  max-width: 380px;
+  width: 90%;
+  position: relative;
+  overflow: hidden;
+}
+
+.lb-title {
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+.lb-crate {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 24px;
+  position: relative;
+  cursor: pointer;
+  font-size: 80px;
+  line-height: 100px;
+  transition: filter 0.3s;
+}
+
+.lb-crate[data-phase="shaking"] {
+  animation: lb-shake 0.5s ease-in-out infinite;
+}
+
+.lb-crate[data-phase="opening"] {
+  filter: brightness(3);
+}
+
+.lb-reveal {
+  animation: lb-reveal-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  --glow: var(--rarity-glow, #94a3b8);
+}
+
+.lb-reward-card {
+  background: var(--rarity-bg, linear-gradient(135deg, #334155, #1e293b));
+  border: 2px solid var(--rarity-border, #64748b);
+  border-radius: 16px;
+  padding: 24px 32px;
+  margin: 0 auto;
+  animation: lb-glow-pulse 2s ease-in-out infinite;
+  --glow: var(--rarity-glow, #94a3b8);
+  box-shadow: 0 0 20px var(--rarity-glow, #94a3b8);
+}
+
+.lb-rarity-badge {
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--rarity-border, #64748b);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.lb-reward-label {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin-bottom: 4px;
+}
+
+.lb-close-btn {
+  margin-top: 24px;
+  padding: 10px 32px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: transform 0.1s;
+}
+
+.lb-close-btn:hover {
+  transform: scale(1.05);
+}
+
+.lb-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: lb-particles 0.8s ease-out forwards;
+}

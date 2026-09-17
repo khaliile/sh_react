@@ -1,0 +1,122 @@
+/* ══════════════════════════════════════════════════════
+   FEYNMAN TRIBUNAL PAGE CONTAINER STYLING
+   ══════════════════════════════════════════════════════ */
+
+.feynman-page-container {
+  min-height: 100vh;
+  padding: 2rem;
+  background: radial-gradient(ellipse at 50% 0%, #151226 0%, #0a0814 60%, #05040a 100%);
+  color: #f1f5f9;
+  font-family: inherit;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.feynman-hud-intro {
+  max-width: 1400px;
+  margin: 0 auto 1.75rem;
+  padding: 1.25rem 1.75rem;
+  border-radius: 20px;
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.feynman-hud-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.feynman-hud-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  color: #818cf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.feynman-hud-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #f8fafc;
+  margin: 0;
+}
+
+.feynman-hud-quote {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin: 0.2rem 0 0;
+}
+
+.feynman-hud-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.feynman-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+
+.feynman-pill.pill-amber {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #fbbf24;
+}
+
+/* Light Theme Overrides */
+[data-theme="light"] .feynman-page-container {
+  background: radial-gradient(ellipse at 50% 0%, #f1f5f9 0%, #f8fafc 60%, #ffffff 100%);
+  color: #0f172a;
+}
+
+[data-theme="light"] .feynman-hud-intro {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .feynman-hud-title {
+  color: #0f172a;
+}
+
+[data-theme="light"] .feynman-hud-quote {
+  color: #64748b;
+}
+
+[data-theme="light"] .feynman-pill {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+  color: #334155;
+}
+
+@media (max-width: 768px) {
+  .feynman-page-container {
+    padding: 1rem;
+  }
+  .feynman-hud-intro {
+    padding: 1rem;
+  }
+}

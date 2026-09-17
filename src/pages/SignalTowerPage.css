@@ -1,0 +1,301 @@
+/* ══════════════════════════════════════════════════════
+   SIGNAL TOWER PAGE — Daily Habit Signal Strength
+   ══════════════════════════════════════════════════════ */
+
+.signal-tower {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #020b0a 0%, #031214 50%, #010a0c 100%);
+  padding: 2rem;
+  color: #e2e8f0;
+  font-family: inherit;
+  overflow-x: hidden;
+}
+
+.signal-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.signal-header h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #22d3ee, #06b6d4, #0891b2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.signal-header p { color: #64748b; font-size: 1rem; margin: 0; }
+
+.signal-badge {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.25rem 0.85rem;
+  background: rgba(6, 182, 212, 0.08);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #22d3ee;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Signal Meter ── */
+.signal-meter-section {
+  max-width: 1400px;
+  margin: 0 auto 2rem;
+  background: rgba(6, 182, 212, 0.03);
+  border: 1px solid rgba(6, 182, 212, 0.12);
+  border-radius: 24px;
+  padding: 2rem;
+}
+
+.signal-meter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.signal-meter-header h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #22d3ee;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.signal-strength-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.3rem 0.85rem;
+  border-radius: 20px;
+}
+
+.signal-strength-badge.strong   { background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); color: #4ade80; }
+.signal-strength-badge.moderate { background: rgba(251,191,36,0.15); border: 1px solid rgba(251,191,36,0.4); color: #fbbf24; }
+.signal-strength-badge.weak     { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #f87171; }
+.signal-strength-badge.silent   { background: rgba(100,116,139,0.12); border: 1px solid rgba(100,116,139,0.3); color: #94a3b8; }
+
+/* ── Spectrum Bars ── */
+.signal-spectrum {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  height: 140px;
+  margin-bottom: 1.5rem;
+}
+
+.signal-bar {
+  flex: 1;
+  max-width: 28px;
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  transition: height 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  animation: signal-breathing 2s ease-in-out infinite alternate;
+}
+
+.signal-bar::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 30%;
+  background: rgba(255,255,255,0.15);
+  border-radius: 4px 4px 0 0;
+}
+
+@keyframes signal-breathing {
+  from { filter: brightness(0.85); }
+  to   { filter: brightness(1.15); }
+}
+
+.signal-bar:nth-child(odd) { animation-delay: 0.15s; }
+.signal-bar:nth-child(3n)  { animation-delay: 0.3s; }
+
+/* ── Signal Frequency Numbers ── */
+.signal-freq-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  color: #334155;
+  font-family: 'Courier New', monospace;
+  margin-bottom: 1rem;
+}
+
+/* ── Big Signal Number ── */
+.signal-big-num {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.signal-big-num .val {
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1;
+  background: linear-gradient(135deg, #22d3ee, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.signal-big-num .label {
+  font-size: 0.75rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ── Week Grid ── */
+.signal-week-grid {
+  max-width: 1400px;
+  margin: 0 auto 2rem;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 18px;
+  padding: 1.5rem;
+}
+
+.signal-week-grid h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  margin: 0 0 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.signal-day-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.65rem;
+}
+
+.signal-day-label {
+  font-size: 0.78rem;
+  color: #64748b;
+  width: 36px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.signal-day-bars {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 20px;
+}
+
+.signal-day-bar {
+  height: 100%;
+  border-radius: 2px;
+  flex: 1;
+  transition: background 0.5s ease;
+}
+
+.signal-day-pct {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  width: 38px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── Stats Row ── */
+.signal-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.signal-stat {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 1.1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.signal-stat:hover {
+  border-color: rgba(6, 182, 212, 0.2);
+  transform: translateY(-2px);
+}
+
+.signal-stat-icon {
+  font-size: 1.2rem;
+  color: #22d3ee;
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signal-stat-val {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #e2e8f0;
+  line-height: 1;
+  margin-bottom: 0.2rem;
+}
+
+.signal-stat-label {
+  font-size: 0.68rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 768px) {
+  .signal-tower { padding: 1rem; }
+  .signal-stats { grid-template-columns: repeat(2, 1fr); }
+  .signal-header h1 { font-size: 1.7rem; }
+}
+
+/* â•â• LIGHT THEME â•â• */
+[data-theme="light"] .signal-tower {
+  background: linear-gradient(160deg, #ecfdf5 0%, #f0fdfa 50%, #e0fdfa 100%);
+  color: #0f172a;
+}
+[data-theme="light"] .signal-header h1 {
+  background: linear-gradient(135deg, #0e7490, #0891b2, #0369a1);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+[data-theme="light"] .signal-header p { color: #475569; }
+[data-theme="light"] .signal-badge { background: rgba(6,182,212,0.08); border-color: rgba(6,182,212,0.25); color: #0e7490; }
+[data-theme="light"] .signal-meter-section { background: #ffffff; border-color: #e2e8f0; box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+[data-theme="light"] .signal-meter-header h2 { color: #0e7490; }
+[data-theme="light"] .signal-big-num .val {
+  background: linear-gradient(135deg, #0e7490, #0891b2);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+[data-theme="light"] .signal-big-num .label { color: #64748b; }
+[data-theme="light"] .signal-freq-row { color: #94a3b8; }
+[data-theme="light"] .signal-week-grid { background: #ffffff; border-color: #e2e8f0; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+[data-theme="light"] .signal-week-grid h3 { color: #1e293b; }
+[data-theme="light"] .signal-day-label { color: #64748b; }
+[data-theme="light"] .signal-day-pct { color: #1e293b; }
+[data-theme="light"] .signal-stat { background: #ffffff; border-color: #e2e8f0; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+[data-theme="light"] .signal-stat:hover { border-color: rgba(6,182,212,0.3); }
+[data-theme="light"] .signal-stat-val { color: #1e293b; }
+[data-theme="light"] .signal-stat-label { color: #64748b; }
+
+/* â”€â”€ RTL â”€â”€ */
+[dir="rtl"] .signal-meter-header { flex-direction: row-reverse; }
+[dir="rtl"] .signal-day-row { flex-direction: row-reverse; }
+[dir="rtl"] .signal-stats { direction: rtl; }
+[dir="rtl"] .signal-day-label { text-align: left; }
+[dir="rtl"] .signal-day-pct { text-align: left; }

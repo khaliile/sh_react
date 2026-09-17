@@ -1,34 +1,49 @@
 import { useState, useRef } from 'react';
 import { useAppStorage } from '../hooks/useAppHooks';
+import { useRpgStorage } from '../hooks/useRpgStorage';
+import { useLanguage } from '../contexts/LanguageContext';
+import { todayKey } from '../utils/dateKey';
 
 const CHALLENGES = [
-  { id: 'no_breaks',    text: 'No unplanned breaks today',         icon: '!', xp: 50 },
-  { id: 'blocks_45',   text: 'Study in 45-min focus blocks only',  icon: '45', xp: 40 },
-  { id: 'teach',       text: 'Teach one concept to yourself aloud', icon: 'T', xp: 60 },
-  { id: 'pomodoro3',   text: '3 Pomodoros before lunch',           icon: 'P', xp: 45 },
-  { id: 'no_phone',    text: 'Zero phone use until 6pm',           icon: 'X', xp: 55 },
-  { id: 'review',      text: 'Review yesterday\'s notes first',    icon: 'R', xp: 35 },
-  { id: 'hardest',     text: 'Tackle your hardest task first',     icon: 'H', xp: 65 },
-  { id: 'early',       text: 'Start studying before 9am',          icon: 'E', xp: 70 },
+  // Extra Reading & Videos (Max 30 min)
+  { id: 'read_book_20',  text: 'Read a book for 20 min', icon: 'B', xp: 30 },
+  { id: 'watch_vid_15',  text: 'Watch a study video for 15 min', icon: 'V', xp: 20 },
+  { id: 'read_doc_10',   text: 'Read documentation for 10 min', icon: 'D', xp: 15 },
+  { id: 'watch_tech_30', text: 'Watch a tech tutorial for 30 min', icon: 'V', xp: 40 },
+
+  // English
+  { id: 'eng_30', text: 'Study extra 30 min on English', icon: 'E', xp: 40 },
+  { id: 'eng_15', text: 'Study extra 15 min on English', icon: 'E', xp: 20 },
+
+  // Math & Data Science
+  { id: 'math_30', text: 'Solve math for 30 min', icon: 'M', xp: 40 },
+  { id: 'ds_20',   text: 'Practice Data Science for 20 min', icon: 'DS', xp: 30 },
+
+  // Quick Focus
+  { id: 'focus_20', text: 'Focus on 1 task for 20 min', icon: 'F', xp: 25 },
+  { id: 'summary_15', text: 'Write a quick summary for 15 min', icon: 'S', xp: 20 }
 ];
 
 // Seeded pick from challenges based on today's date
 function getTodayChallenge() {
-  const today = new Date().toISOString().slice(0, 10);
+  const today = todayKey();
   const seed  = today.split('-').reduce((a, b) => a + parseInt(b), 0);
   return CHALLENGES[seed % CHALLENGES.length];
 }
 
 const WHEEL_COLORS = [
-  '#3b82f6','#10b981','#f59e0b','#ef4444',
-  '#a78bfa','#ec4899','#06b6d4','#84cc16'
+  '#3b82f6', '#10b981', '#f59e0b', '#ef4444',
+  '#a78bfa', '#ec4899', '#06b6d4', '#84cc16',
+  '#6366f1', '#14b8a6'
 ];
 
 export default function DailySpin() {
-  const todayKey = new Date().toISOString().slice(0, 10);
+  const { t } = useLanguage();
+  const todayKey_ = todayKey();
   const [spinLog, setSpinLog] = useAppStorage('app_spin_log', {});
+  const { addXpAndCoins } = useRpgStorage();
 
-  const todayEntry = spinLog[todayKey];
+  const todayEntry = spinLog[todayKey_];
   const todayChallenge = getTodayChallenge();
 
   const [spinning, setSpinning] = useState(false);
@@ -49,12 +64,13 @@ export default function DailySpin() {
     setTimeout(() => {
       setSpinning(false);
       setShowResult(true);
-      setSpinLog(prev => ({ ...prev, [todayKey]: { id: todayChallenge.id, spun: true, done: false, ts: Date.now() } }));
+      setSpinLog(prev => ({ ...prev, [todayKey_]: { id: todayChallenge.id, spun: true, done: false, ts: Date.now() } }));
     }, 3500);
   };
 
   const markDone = () => {
-    setSpinLog(prev => ({ ...prev, [todayKey]: { ...prev[todayKey], done: true } }));
+    setSpinLog(prev => ({ ...prev, [todayKey_]: { ...prev[todayKey_], done: true } }));
+    addXpAndCoins(todayChallenge.xp, Math.round(todayChallenge.xp / 5), `Daily Challenge: ${todayChallenge.text}`);
     setJustCompleted(true);
     setTimeout(() => setJustCompleted(false), 2000);
   };
@@ -70,8 +86,8 @@ export default function DailySpin() {
     <div className="arena-card spin-card">
       <div className="arena-card-header">
         <div>
-          <h3 className="arena-card-title">Daily Challenge</h3>
-          <p className="arena-card-sub">Spin once a day for your wildcard mission</p>
+          <h3 className="arena-card-title">{t('spin.title')}</h3>
+          <p className="arena-card-sub">{t('spin.subtitle')}</p>
         </div>
         <div className="spin-xp-badge">
           <span className="spin-xp-val">{totalXP}</span>
@@ -90,7 +106,6 @@ export default function DailySpin() {
           {CHALLENGES.map((ch, i) => {
             const segAngle = 360 / CHALLENGES.length;
             const rotate = i * segAngle;
-            const skewY = 90 - segAngle;
             return (
               <div
                 key={ch.id}
@@ -110,11 +125,11 @@ export default function DailySpin() {
 
         {!spinning && !showResult && (
           <button className="spin-btn" onClick={spin}>
-            SPIN
+            {t('spin.spin')}
           </button>
         )}
         {spinning && (
-          <div className="spin-center-msg">Spinning...</div>
+          <div className="spin-center-msg">{t('spin.spinning')}</div>
         )}
         {showResult && !spinning && (
           <div className="spin-center-result">{todayChallenge.icon}</div>
@@ -124,24 +139,24 @@ export default function DailySpin() {
       {/* Result */}
       {showResult && !spinning && (
         <div className={`spin-result ${alreadyDone ? 'spin-result-done' : ''}`}>
-          <div className="spin-result-label">Today's Challenge</div>
+          <div className="spin-result-label">{t('spin.todaysChallenge')}</div>
           <div className="spin-result-text">{todayChallenge.text}</div>
-          <div className="spin-result-xp">+{todayChallenge.xp} XP on completion</div>
+          <div className="spin-result-xp">{t('spin.completionXp', { xp: todayChallenge.xp })}</div>
 
           {alreadyDone ? (
             <div className="spin-done-banner">
-              {justCompleted ? 'XP Earned!' : 'Completed — great work!'}
+              {justCompleted ? t('spin.xpEarned') : t('spin.completed')}
             </div>
           ) : (
             <button className="spin-complete-btn" onClick={markDone}>
-              Mark Complete (+{todayChallenge.xp} XP)
+              {t('spin.markComplete', { xp: todayChallenge.xp })}
             </button>
           )}
         </div>
       )}
 
       {!showResult && !spinning && (
-        <div className="spin-idle-hint">A new challenge is waiting — give it a spin!</div>
+        <div className="spin-idle-hint">{t('spin.idleHint')}</div>
       )}
     </div>
   );
